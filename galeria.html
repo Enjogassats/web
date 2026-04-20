@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ca-valencia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria – Enjogassats</title>
+  <meta name="description" content="Galeria de fotos dels esdeveniments i jornades d'Enjogassats.">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #1a0a3d 0%, #2E86AB 100%);
+      padding: 7rem 1.5rem 4rem; color: #fff; text-align: center;
+    }
+    .page-hero h1 { color: #fff; margin-bottom: .75rem; }
+    .page-hero p { color: rgba(255,255,255,.7); font-size: 1.1rem; }
+
+    /* Filter bar */
+    .filter-bar { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
+    .filter-btn {
+      padding: .5rem 1.2rem; border-radius: 50px; border: 2px solid var(--border);
+      background: var(--bg); font-family: var(--font-b); font-weight: 600; font-size: .9rem;
+      cursor: pointer; transition: all .18s; color: var(--text-l);
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* Masonry-style grid */
+    .gallery-grid {
+      columns: 4; column-gap: 1rem;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 1rem;
+      border-radius: 14px; overflow: hidden; cursor: pointer;
+      position: relative; display: block;
+      transition: transform .22s, box-shadow .22s;
+    }
+    .gallery-item:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,.2); }
+    .gallery-thumb {
+      width: 100%; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; transition: transform .3s;
+    }
+    .gallery-item:hover .gallery-thumb { transform: scale(1.05); }
+    .gallery-item-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 100%);
+      padding: 1.5rem .9rem .8rem;
+      opacity: 0; transition: opacity .22s;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-overlay h4 { color: #fff; font-size: .85rem; margin-bottom: .15rem; }
+    .gallery-item-overlay span { color: rgba(255,255,255,.65); font-size: .75rem; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.92); align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      max-width: 800px; width: 100%; background: var(--bg);
+      border-radius: var(--radius-l); overflow: hidden; position: relative;
+      animation: lbIn .25s ease;
+    }
+    @keyframes lbIn { from { opacity:0; transform: scale(.93); } to { opacity:1; transform: scale(1); } }
+    .lightbox-img {
+      width: 100%; min-height: 360px; display: flex; align-items: center;
+      justify-content: center; font-size: 6rem;
+    }
+    .lightbox-body { padding: 1.5rem; }
+    .lightbox-body h3 { margin-bottom: .3rem; }
+    .lightbox-body p { font-size: .9rem; margin: 0; }
+    .lightbox-close {
+      position: absolute; top: 1rem; right: 1rem; width: 38px; height: 38px;
+      background: rgba(0,0,0,.5); color: #fff; border: none; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .18s;
+    }
+    .lightbox-close:hover { background: rgba(0,0,0,.8); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,.5); color: #fff; border: none;
+      width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .18s;
+    }
+    .lightbox-nav:hover { background: rgba(0,0,0,.8); }
+    .lightbox-prev { left: -22px; }
+    .lightbox-next { right: -22px; }
+
+    @media (max-width: 1024px) { .gallery-grid { columns: 3; } }
+    @media (max-width: 768px)  { .gallery-grid { columns: 2; } }
+    @media (max-width: 480px)  { .gallery-grid { columns: 1; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🎲</div>
+      <div><div class="logo-text">ENJOGASSATS</div><div class="logo-sub">Vall de Segó</div></div>
+    </a>
+    <nav>
+      <a href="index.html"      class="nav-link">Inici</a>
+      <a href="eventos.html"    class="nav-link">Esdeveniments</a>
+      <a href="galeria.html"    class="nav-link active">Galeria</a>
+      <a href="novedades.html"  class="nav-link">Novetats</a>
+      <a href="contacto.html"   class="nav-link">Contacte</a>
+      <a href="contacto.html#soci" class="btn btn-primary btn-sm nav-cta">Uneix-te</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Obrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html"     class="nav-link">🏠 Inici</a>
+  <a href="eventos.html"   class="nav-link">📅 Esdeveniments</a>
+  <a href="galeria.html"   class="nav-link active">🖼️ Galeria</a>
+  <a href="novedades.html" class="nav-link">📰 Novetats</a>
+  <a href="contacto.html"  class="nav-link">✉️ Contacte</a>
+  <a href="contacto.html#soci" class="btn btn-primary">Uneix-te a l'associació</a>
+</div>
+
+<div class="page-hero">
+  <h1>🖼️ Galeria</h1>
+  <p>Moments, jornades i records de la nostra comunitat lúdica</p>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+
+    <!-- Filter bar -->
+    <div class="filter-bar" role="group" aria-label="Filtra per tipus d'event">
+      <button class="filter-btn active" data-filter="all">Tots</button>
+      <button class="filter-btn" data-filter="jornada">🎲 Jornades</button>
+      <button class="filter-btn" data-filter="torneig">🏆 Torneigs</button>
+      <button class="filter-btn" data-filter="taller">📚 Tallers</button>
+      <button class="filter-btn" data-filter="especial">✨ Especials</button>
+    </div>
+
+    <!-- Gallery grid -->
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- Each item: data-filter, data-title, data-date, data-desc, data-emoji, style for bg -->
+      <div class="gallery-item" data-filter="jornada" data-title="Jornada de Nadal 2024" data-date="21 desembre 2024" data-desc="Una nit màgica plena de jocs i bon ambient per acabar l'any jugant." tabindex="0" role="button" aria-label="Veure foto: Jornada de Nadal 2024">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#2E86AB,#06A77D);height:220px">🎄</div>
+        <div class="gallery-item-overlay"><h4>Jornada de Nadal 2024</h4><span>📅 21 des 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="torneig" data-title="Torneig de Tardor – Terraforming Mars" data-date="15 novembre 2024" data-desc="8 participants es van disputar el títol de millor colonitzador de Mart. Guanyador: Jordi T." tabindex="0" role="button" aria-label="Veure foto: Torneig de Tardor">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#F77F00,#c45500);height:280px">🏆</div>
+        <div class="gallery-item-overlay"><h4>Torneig Terraforming Mars</h4><span>📅 15 nov 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="taller" data-title="Taller de Jocs de Rol – D&D" data-date="5 octubre 2024" data-desc="Vuit aventurers novells s'endinsen per primera vegada en el món dels jocs de rol." tabindex="0" role="button" aria-label="Veure foto: Taller de Rol">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);height:180px">🧙</div>
+        <div class="gallery-item-overlay"><h4>Taller D&D</h4><span>📅 5 oct 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="especial" data-title="I Fira Lúdica de la Vall de Segó" data-date="14 setembre 2024" data-desc="Primera fira lúdica pública amb més de 200 visitants. Un èxit rotund per a l'associació." tabindex="0" role="button" aria-label="Veure foto: Fira Lúdica">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#F77F00,#2E86AB);height:260px">🎪</div>
+        <div class="gallery-item-overlay"><h4>I Fira Lúdica Vall de Segó</h4><span>📅 14 set 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="jornada" data-title="Jornada d'Estiu 2024" data-date="13 juliol 2024" data-desc="Partides llargues de Gloomhaven i Twilight Imperium. 10 hores de joc ininterromput!" tabindex="0" role="button" aria-label="Veure foto: Jornada d'Estiu">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#06A77D,#2E86AB);height:200px">☀️</div>
+        <div class="gallery-item-overlay"><h4>Jornada d'Estiu 2024</h4><span>📅 13 jul 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="taller" data-title="Taller Introducció Eurogame" data-date="23 març 2024" data-desc="Descobrim les mecàniques dels jocs eurogame amb Agricola i Brass: Birmingham." tabindex="0" role="button" aria-label="Veure foto: Taller Eurogame">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#06A77D,#F77F00);height:240px">🌾</div>
+        <div class="gallery-item-overlay"><h4>Taller Eurogame</h4><span>📅 23 març 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="jornada" data-title="Jornada de Primavera 2024" data-date="11 maig 2024" data-desc="Una tarda perfecta amb més de 30 participants i 15 jocs a les taules alhora." tabindex="0" role="button" aria-label="Veure foto: Jornada de Primavera">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);height:190px">🌸</div>
+        <div class="gallery-item-overlay"><h4>Jornada de Primavera 2024</h4><span>📅 11 maig 2024</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="torneig" data-title="Torneig de Carcassonne 2023" data-date="9 desembre 2023" data-desc="16 participants i una final emocionant per tal de construir el millor territori medieval." tabindex="0" role="button" aria-label="Veure foto: Torneig Carcassonne">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#2E86AB,#1a5276);height:250px">🏰</div>
+        <div class="gallery-item-overlay"><h4>Torneig Carcassonne 2023</h4><span>📅 9 des 2023</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="especial" data-title="Nit de Jocs – Maratón 2023" data-date="15 juliol 2023" data-desc="10 hores de joc nocturn. El joc més jugat: Pandemic Legacy Temporada 1." tabindex="0" role="button" aria-label="Veure foto: Nit de Jocs">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#1a2e3b,#2E86AB);height:210px">🌙</div>
+        <div class="gallery-item-overlay"><h4>Nit de Jocs – Maratón</h4><span>📅 15 jul 2023</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="jornada" data-title="Jornada Inaugural 2019" data-date="12 octubre 2019" data-desc="El primer event oficial d'Enjogassats. 12 fondadors i moltes ganes de jugar." tabindex="0" role="button" aria-label="Veure foto: Jornada Inaugural">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#F77F00,#06A77D);height:230px">🎉</div>
+        <div class="gallery-item-overlay"><h4>Jornada Inaugural 2019</h4><span>📅 12 oct 2019</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="taller" data-title="Taller Disseny de Jocs 2023" data-date="4 novembre 2023" data-desc="Creant el primer prototip d'un joc de cartes dissenyat pels nostres socis." tabindex="0" role="button" aria-label="Veure foto: Taller Disseny">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#8b5cf6,#06A77D);height:200px">✏️</div>
+        <div class="gallery-item-overlay"><h4>Taller Disseny de Jocs</h4><span>📅 4 nov 2023</span></div>
+      </div>
+
+      <div class="gallery-item" data-filter="especial" data-title="Col·laboració Biblioteca Faura" data-date="22 febrer 2024" data-desc="Presentació del servei de préstec de jocs integrat amb la biblioteca municipal de Faura." tabindex="0" role="button" aria-label="Veure foto: Biblioteca Faura">
+        <div class="gallery-thumb" style="background:linear-gradient(135deg,#2E86AB,#ec4899);height:260px">📚</div>
+        <div class="gallery-item-overlay"><h4>Col·laboració Biblioteca</h4><span>📅 22 feb 2024</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualitzador de fotos">
+  <div class="lightbox-inner" id="lightboxInner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Tancar">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Anterior">‹</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Següent">›</button>
+    <div class="lightbox-img" id="lightboxImg"></div>
+    <div class="lightbox-body">
+      <h3 id="lightboxTitle"></h3>
+      <p id="lightboxDate" style="color:var(--text-l);font-size:.85rem;margin-bottom:.4rem"></p>
+      <p id="lightboxDesc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🎲 ENJOGASSATS</div>
+        <p class="footer-tagline">Associació Lúdica i Cultural<br>de la Vall de Segó</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook">f</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegació</h4>
+        <ul>
+          <li><a href="index.html">Inici</a></li>
+          <li><a href="eventos.html">Esdeveniments</a></li>
+          <li><a href="galeria.html">Galeria</a></li>
+          <li><a href="novedades.html">Novetats</a></li>
+          <li><a href="contacto.html">Contacte</a></li>
+        </ul>
+      </div>
+      <div><h4>L'associació</h4><ul><li><a href="contacto.html#soci">Fes-te soci</a></li><li><a href="contacto.html#voluntariat">Voluntariat</a></li></ul></div>
+      <div><h4>Contacte</h4><ul><li>📧 enjogassats@gmail.com</li><li>📍 Faura, Vall de Segó, València</li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Enjogassats – Associació Lúdica i Cultural de la Vall de Segó</span>
+      <span>Fet amb ❤️ i molts jocs de taula</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.display = (f === 'all' || item.dataset.filter === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Lightbox
+  const items = Array.from(document.querySelectorAll('.gallery-item'));
+  let currentIdx = 0;
+  const lb = document.getElementById('lightbox');
+
+  function openLightbox(idx) {
+    const visible = items.filter(i => i.style.display !== 'none');
+    currentIdx = idx;
+    const item = visible[idx] || items[idx];
+    document.getElementById('lightboxImg').style.cssText = item.querySelector('.gallery-thumb').style.cssText;
+    document.getElementById('lightboxImg').textContent = item.querySelector('.gallery-thumb').textContent;
+    document.getElementById('lightboxTitle').textContent = item.dataset.title;
+    document.getElementById('lightboxDate').textContent = '📅 ' + item.dataset.date;
+    document.getElementById('lightboxDesc').textContent = item.dataset.desc;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  items.forEach((item, idx) => {
+    item.addEventListener('click', () => openLightbox(idx));
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(idx); });
+  });
+
+  document.getElementById('lightboxClose').addEventListener('click', () => {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  lb.addEventListener('click', e => { if (e.target === lb) { lb.classList.remove('open'); document.body.style.overflow = ''; } });
+
+  document.getElementById('lightboxPrev').addEventListener('click', () => {
+    const visible = items.filter(i => i.style.display !== 'none');
+    currentIdx = (currentIdx - 1 + visible.length) % visible.length;
+    openLightbox(currentIdx);
+  });
+  document.getElementById('lightboxNext').addEventListener('click', () => {
+    const visible = items.filter(i => i.style.display !== 'none');
+    currentIdx = (currentIdx + 1) % visible.length;
+    openLightbox(currentIdx);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; }
+    if (e.key === 'ArrowLeft') document.getElementById('lightboxPrev').click();
+    if (e.key === 'ArrowRight') document.getElementById('lightboxNext').click();
+  });
+
+  // Fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

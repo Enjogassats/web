@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ca-valencia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enjogassats – Associació Lúdica i Cultural de la Vall de Segó</title>
+  <meta name="description" content="Enjogassats és una associació lúdica i cultural de la Vall de Segó dedicada als jocs de taula, el rol i l'estratègia.">
+  <meta name="theme-color" content="#2E86AB">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, #0d2233 0%, #1e4d6b 45%, #0a3d2e 100%);
+      position: relative; overflow: hidden;
+      padding: 6rem 1.5rem 4rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2l-38 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    /* Floating dice decorations */
+    .hero-dice {
+      position: absolute; font-size: 4rem; opacity: .06; pointer-events: none;
+      animation: floatDice 8s ease-in-out infinite;
+    }
+    .hero-dice:nth-child(1) { top: 12%; left: 6%; animation-delay: 0s; }
+    .hero-dice:nth-child(2) { top: 65%; left: 3%; animation-delay: 2s; font-size: 6rem; }
+    .hero-dice:nth-child(3) { top: 20%; right: 8%; animation-delay: 1s; font-size: 5rem; }
+    .hero-dice:nth-child(4) { top: 70%; right: 5%; animation-delay: 3s; }
+    .hero-dice:nth-child(5) { top: 45%; left: 50%; animation-delay: 4s; font-size: 3rem; }
+    @keyframes floatDice { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(8deg); } }
+
+    .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .hero-content { color: #fff; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: .5rem; background: rgba(247,127,0,.2); border: 1px solid rgba(247,127,0,.4); color: var(--orange); padding: .35rem 1rem; border-radius: 50px; font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { color: #fff; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .hero h1 span { color: var(--orange); }
+    .hero-tagline { font-size: 1.15rem; color: rgba(255,255,255,.7); margin-bottom: .5rem; font-weight: 500; }
+    .hero-subtitle { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-pill { background: rgba(255,255,255,.1); color: rgba(255,255,255,.85); padding: .3rem .9rem; border-radius: 50px; font-size: .9rem; font-weight: 600; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem; }
+    .hero-stat { text-align: center; padding: 1rem; background: rgba(255,255,255,.07); border-radius: 14px; border: 1px solid rgba(255,255,255,.1); }
+    .hero-stat-n { font-family: var(--font-h); font-weight: 900; font-size: 2rem; color: var(--orange); }
+    .hero-stat-l { font-size: .8rem; color: rgba(255,255,255,.6); margin-top: .2rem; }
+    .hero-visual { display: flex; align-items: center; justify-content: center; }
+    .hero-board { width: 380px; height: 380px; background: rgba(255,255,255,.06); border-radius: 28px; border: 1px solid rgba(255,255,255,.12); display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; padding: 20px; }
+    .hero-game-card {
+      background: rgba(255,255,255,.08); border-radius: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .3rem; padding: .7rem .4rem; border: 1px solid rgba(255,255,255,.08);
+      transition: all .3s;
+    }
+    .hero-game-card:hover { background: rgba(255,255,255,.15); transform: scale(1.05); }
+    .hero-game-card .ico { font-size: 1.8rem; }
+    .hero-game-card .name { font-size: .6rem; color: rgba(255,255,255,.6); text-align: center; font-weight: 600; letter-spacing: .03em; }
+    .hero-game-card.featured { background: rgba(247,127,0,.2); border-color: rgba(247,127,0,.4); grid-column: span 2; flex-direction: row; gap: 1rem; padding: 1rem; }
+    .hero-game-card.featured .ico { font-size: 2.4rem; }
+    .hero-game-card.featured .name { font-size: .75rem; color: rgba(255,255,255,.85); font-weight: 700; text-align: left; }
+
+    /* ===== Qui som ===== */
+    .quisom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .quisom-text h2 { margin-bottom: 1.25rem; }
+    .quisom-text p { margin-bottom: 1rem; }
+    .quisom-values { display: grid; grid-template-columns: 1fr; gap: .75rem; margin-top: 2rem; }
+    .value-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg2); border-radius: 12px; border-left: 3px solid var(--blue); }
+    .value-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .value-text strong { display: block; font-family: var(--font-h); font-weight: 700; margin-bottom: .2rem; color: var(--text); }
+    .value-text span { font-size: .9rem; color: var(--text-l); }
+    .quisom-visual { background: linear-gradient(135deg, var(--blue-l), var(--green-l)); border-radius: var(--radius-l); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .mission-card { background: var(--bg); border-radius: 14px; padding: 1.5rem; box-shadow: var(--shadow); }
+    .mission-card h4 { font-family: var(--font-h); color: var(--blue); margin-bottom: .5rem; font-size: 1rem; }
+    .mission-card p { font-size: .9rem; margin: 0; }
+    .mission-card.accent { background: var(--orange); }
+    .mission-card.accent h4, .mission-card.accent p { color: #fff; }
+
+    /* ===== Esdeveniments preview ===== */
+    .event-card-inner { padding: 1.5rem; }
+    .event-card-inner h3 { margin-bottom: .5rem; font-size: 1.15rem; }
+    .event-card-inner p { font-size: .9rem; margin-bottom: 1.25rem; }
+    .event-card-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+    .event-loc { font-size: .85rem; color: var(--text-l); display: flex; align-items: center; gap: .3rem; }
+
+    /* ===== Per-què section ===== */
+    .benefit-card { background: var(--bg); border-radius: var(--radius-l); padding: 2rem 1.75rem; box-shadow: var(--shadow); text-align: center; transition: transform .22s, box-shadow .22s; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-h); }
+    .benefit-icon { width: 64px; height: 64px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1.25rem; }
+    .benefit-card h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+    .benefit-card p { font-size: .9rem; }
+
+    /* ===== CTA banner ===== */
+    .cta-banner {
+      background: linear-gradient(120deg, var(--blue), var(--green));
+      border-radius: var(--radius-l); padding: 3.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+      color: #fff;
+    }
+    .cta-banner h2 { color: #fff; margin-bottom: .5rem; }
+    .cta-banner p { color: rgba(255,255,255,.8); max-width: 480px; margin: 0; }
+    .cta-banner .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-visual { display: none; }
+      .hero-stats { grid-template-columns: repeat(3,1fr); }
+      .quisom-grid { grid-template-columns: 1fr; }
+      .cta-banner { text-align: center; justify-content: center; }
+      .cta-banner .actions { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🎲</div>
+      <div>
+        <div class="logo-text">ENJOGASSATS</div>
+        <div class="logo-sub">Vall de Segó</div>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html"      class="nav-link active">Inici</a>
+      <a href="eventos.html"    class="nav-link">Esdeveniments</a>
+      <a href="galeria.html"    class="nav-link">Galeria</a>
+      <a href="novedades.html"  class="nav-link">Novetats</a>
+      <a href="contacto.html"   class="nav-link">Contacte</a>
+      <a href="contacto.html#soci" class="btn btn-primary btn-sm nav-cta">Uneix-te</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Obrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menú mòbil">
+  <a href="index.html"     class="nav-link active">🏠 Inici</a>
+  <a href="eventos.html"   class="nav-link">📅 Esdeveniments</a>
+  <a href="galeria.html"   class="nav-link">🖼️ Galeria</a>
+  <a href="novedades.html" class="nav-link">📰 Novetats</a>
+  <a href="contacto.html"  class="nav-link">✉️ Contacte</a>
+  <a href="contacto.html#soci" class="btn btn-primary">Uneix-te a l'associació</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-label="Portada principal">
+  <!-- Floating dice -->
+  <div class="hero-dice" aria-hidden="true">🎲</div>
+  <div class="hero-dice" aria-hidden="true">🎯</div>
+  <div class="hero-dice" aria-hidden="true">♟️</div>
+  <div class="hero-dice" aria-hidden="true">🎮</div>
+  <div class="hero-dice" aria-hidden="true">🃏</div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">🎲 Associació Lúdica</div>
+      <h1><span>ENJOGASSATS</span></h1>
+      <p class="hero-tagline">Associació Lúdica i Cultural de la Vall de Segó</p>
+      <div class="hero-subtitle">
+        <span class="hero-pill">Jocs de taula</span>
+        <span class="hero-pill">Rol</span>
+        <span class="hero-pill">Estratègia</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="contacto.html#soci" class="btn btn-primary">Uneix-te ara</a>
+        <a href="eventos.html" class="btn btn-ghost">Veure esdeveniments</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n">+80</div>
+          <div class="hero-stat-l">Socis actius</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">+200</div>
+          <div class="hero-stat-l">Jocs al banc</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">+5</div>
+          <div class="hero-stat-l">Anys jugant</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-board">
+        <div class="hero-game-card featured">
+          <div class="ico">🏔️</div>
+          <div><div class="name">Joc del mes</div><div style="font-size:.85rem;color:#fff;font-weight:700;font-family:var(--font-h)">Terraforming Mars</div></div>
+        </div>
+        <div class="hero-game-card"><div class="ico">🌾</div><div class="name">Catan</div></div>
+        <div class="hero-game-card"><div class="ico">🦠</div><div class="name">Pandemic</div></div>
+        <div class="hero-game-card"><div class="ico">🏰</div><div class="name">Carcassonne</div></div>
+        <div class="hero-game-card"><div class="ico">🗺️</div><div class="name">Ticket to Ride</div></div>
+        <div class="hero-game-card"><div class="ico">⚔️</div><div class="name">Gloomhaven</div></div>
+        <div class="hero-game-card"><div class="ico">🧙</div><div class="name">Rol</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUI SOM ===== -->
+<section class="section" id="quisom" aria-labelledby="quisom-title">
+  <div class="section-inner">
+    <div class="quisom-grid">
+      <div class="quisom-text fade-up">
+        <span class="label" style="color:var(--blue)">Qui som</span>
+        <h2 id="quisom-title" style="margin-top:.5rem">Una comunitat apassionada pels jocs</h2>
+        <p>Enjogassats és una associació cultural sense ànim de lucre nascuda a la Vall de Segó per reunir totes les persones que estimen els jocs de taula, els jocs de rol i els jocs d'estratègia.</p>
+        <p>Organitzem jornades mensuals, torneigs i tallers a Faura i als municipis veïns, creant un espai segur, inclusiu i divertit per a totes les edats.</p>
+        <p>Gestionem un banc de jocs amb més de 200 títols que els socis poden gaudir i préstec, i col·laborem activament amb biblioteques i centres cívics de la comarca.</p>
+        <div class="quisom-values">
+          <div class="value-item">
+            <div class="value-icon">🤝</div>
+            <div class="value-text">
+              <strong>Comunitat</strong>
+              <span>Un espai de trobada per a persones de totes les edats i orígens.</span>
+            </div>
+          </div>
+          <div class="value-item" style="border-left-color:var(--orange)">
+            <div class="value-icon">🎉</div>
+            <div class="value-text">
+              <strong>Diversió</strong>
+              <span>Perquè jugar és la millor manera de relacionar-se i desconnectar.</span>
+            </div>
+          </div>
+          <div class="value-item" style="border-left-color:var(--green)">
+            <div class="value-icon">🧠</div>
+            <div class="value-text">
+              <strong>Aprenentatge</strong>
+              <span>Els jocs de taula estimulen la creativitat, la lògica i el treball en equip.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quisom-visual fade-up fade-up-d1">
+        <div class="mission-card">
+          <h4>🎯 La nostra missió</h4>
+          <p>Promoure els jocs de taula com a eina cultural i social, fomentant la participació i la creativitat a la Vall de Segó.</p>
+        </div>
+        <div class="mission-card">
+          <h4>👁️ La nostra visió</h4>
+          <p>Ser el punt de referència lúdic de la comarca, amb un banc de jocs accessible i jornades regulars obertes a tothom.</p>
+        </div>
+        <div class="mission-card accent">
+          <h4>✨ Gratuït i sense compromís</h4>
+          <p>Fer-te simpatitzant és 100% gratuït. Vine a conèixer-nos a la pròxima jornada!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRÒXIMS ESDEVENIMENTS ===== -->
+<section class="section section-bg" id="esdeveniments" aria-labelledby="events-title">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="eyebrow">📅 Agenda</span>
+      <h2 id="events-title">Pròxims esdeveniments</h2>
+      <p>No et perdes cap de les nostres jornades, torneigs i tallers. Hi ha diversió per a tothom!</p>
+    </div>
+    <div class="grid-3">
+      <!-- Event 1 -->
+      <article class="card fade-up">
+        <div class="card-img-placeholder" style="background:linear-gradient(135deg,#2E86AB,#06A77D)">🎲</div>
+        <div class="event-card-inner">
+          <div class="card-meta">
+            <span class="badge badge-blue">📅 10 maig 2025</span>
+            <span class="badge badge-green">Jornada</span>
+          </div>
+          <h3>Jornada Mensual de Maig</h3>
+          <p>Tarda de jocs de taula a la sala polivalent de Faura. Portem Catan, Pandemic, Carcassonne i molts més. Per a tots els nivells!</p>
+          <div class="event-card-foot">
+            <span class="event-loc">📍 Faura, 17:00h</span>
+            <a href="eventos.html" class="btn btn-outline btn-sm">Més info</a>
+          </div>
+        </div>
+      </article>
+      <!-- Event 2 -->
+      <article class="card fade-up fade-up-d1">
+        <div class="card-img-placeholder" style="background:linear-gradient(135deg,#F77F00,#e05d00)">🏆</div>
+        <div class="event-card-inner">
+          <div class="card-meta">
+            <span class="badge badge-orange">📅 24 maig 2025</span>
+            <span class="badge badge-orange">Torneig</span>
+          </div>
+          <h3>I Torneig de Catan de la Vall de Segó</h3>
+          <p>Primera edició del torneig oficial de Catan! Places limitades, inscripció gratuïta per als socis i 5€ per als no socis.</p>
+          <div class="event-card-foot">
+            <span class="event-loc">📍 Sagunt, 10:00h</span>
+            <a href="eventos.html" class="btn btn-outline btn-sm">Inscriu-te</a>
+          </div>
+        </div>
+      </article>
+      <!-- Event 3 -->
+      <article class="card fade-up fade-up-d2">
+        <div class="card-img-placeholder" style="background:linear-gradient(135deg,#06A77D,#04856a)">🧙</div>
+        <div class="event-card-inner">
+          <div class="card-meta">
+            <span class="badge badge-green">📅 7 juny 2025</span>
+            <span class="badge badge-blue">Taller</span>
+          </div>
+          <h3>Taller d'Iniciació al Joc de Rol</h3>
+          <p>Mai has jugat a rol? Aquesta és la teua oportunitat! El nostre mestre de joc et guiarà en una aventura d'introducció a D&D.</p>
+          <div class="event-card-foot">
+            <span class="event-loc">📍 Albalat dels Sorells, 18:00h</span>
+            <a href="eventos.html" class="btn btn-outline btn-sm">Més info</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="text-center mt-2">
+      <a href="eventos.html" class="btn btn-secondary">Veure tots els esdeveniments →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PER QUÈ UNIR-TE ===== -->
+<section class="section" aria-labelledby="benefits-title">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="eyebrow">🌟 Beneficis</span>
+      <h2 id="benefits-title">Per què unir-te a Enjogassats?</h2>
+      <p>Ser simpatitzant és gratuït i t'obre les portes a una comunitat increïble.</p>
+    </div>
+    <div class="grid-4">
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon" style="background:var(--blue-l)">🎲</div>
+        <h3>Jornades mensuals</h3>
+        <p>Accés a les sessions de joc mensuals amb el nostre banc de més de 200 jocs.</p>
+      </div>
+      <div class="benefit-card fade-up fade-up-d1">
+        <div class="benefit-icon" style="background:var(--green-l)">📚</div>
+        <h3>Préstec de jocs</h3>
+        <p>Emporta't jocs a casa amb el nostre sistema de préstec gratuït per als socis.</p>
+      </div>
+      <div class="benefit-card fade-up fade-up-d2">
+        <div class="benefit-icon" style="background:var(--orange-l)">🤝</div>
+        <h3>Comunitat activa</h3>
+        <p>Forma part d'un grup de WhatsApp per organitzar partides espontànies quan vulgues.</p>
+      </div>
+      <div class="benefit-card fade-up fade-up-d3">
+        <div class="benefit-icon" style="background:#f0f0ff">🏷️</div>
+        <h3>Descomptes a botigues</h3>
+        <p>Descomptes exclusius a botigues de jocs col·laboradores de la comarca de l'Horta Nord.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section class="section section-bg" aria-label="Crida a l'acció">
+  <div class="section-inner">
+    <div class="cta-banner fade-up">
+      <div>
+        <h2>Llest per a jugar?</h2>
+        <p>Uneix-te a Enjogassats avui. És gratuït, és divertit i és a prop de casa teua.</p>
+      </div>
+      <div class="actions">
+        <a href="contacto.html#soci" class="btn btn-primary">Fes-te simpatitzant</a>
+        <a href="contacto.html" class="btn btn-ghost">Contacta amb nosaltres</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer" aria-label="Peu de pàgina">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🎲 ENJOGASSATS</div>
+        <p class="footer-tagline">Associació Lúdica i Cultural<br>de la Vall de Segó</p>
+        <p style="font-size:.85rem;opacity:.6">Fomentant la cultura lúdica a<br>la Vall de Segó des de 2019.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook">f</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegació</h4>
+        <ul>
+          <li><a href="index.html">Inici</a></li>
+          <li><a href="eventos.html">Esdeveniments</a></li>
+          <li><a href="galeria.html">Galeria</a></li>
+          <li><a href="novedades.html">Novetats</a></li>
+          <li><a href="contacto.html">Contacte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>L'associació</h4>
+        <ul>
+          <li><a href="contacto.html#soci">Fes-te soci</a></li>
+          <li><a href="contacto.html#voluntariat">Voluntariat</a></li>
+          <li><a href="#">Banc de jocs</a></li>
+          <li><a href="#">Estatuts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacte</h4>
+        <ul>
+          <li>📧 enjogassats@gmail.com</li>
+          <li>📱 +34 600 000 000</li>
+          <li>📍 Faura, Vall de Segó<br>&nbsp;&nbsp;&nbsp;&nbsp;46249, València</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Enjogassats – Associació Lúdica i Cultural de la Vall de Segó</span>
+      <span>Fet amb ❤️ i molts jocs de taula</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll effect
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

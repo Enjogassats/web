@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ca-valencia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novetats – Enjogassats</title>
+  <meta name="description" content="Últimes novetats, articles i notícies d'Enjogassats, associació lúdica de la Vall de Segó.">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #0a2918 0%, #06A77D 100%);
+      padding: 7rem 1.5rem 4rem; color: #fff; text-align: center;
+    }
+    .page-hero h1 { color: #fff; margin-bottom: .75rem; }
+    .page-hero p { color: rgba(255,255,255,.7); font-size: 1.1rem; }
+
+    /* Blog layout */
+    .blog-layout { display: grid; grid-template-columns: 1fr 340px; gap: 3.5rem; align-items: start; }
+
+    /* Featured article */
+    .article-featured {
+      border-radius: var(--radius-l); overflow: hidden;
+      box-shadow: var(--shadow); margin-bottom: 2.5rem; cursor: pointer;
+      transition: transform .22s, box-shadow .22s;
+    }
+    .article-featured:hover { transform: translateY(-4px); box-shadow: var(--shadow-h); }
+    .article-featured .art-img {
+      width: 100%; height: 280px;
+      display: flex; align-items: center; justify-content: center; font-size: 5rem;
+    }
+    .article-featured .art-body { padding: 2rem; background: var(--bg); }
+    .article-featured h2 { font-size: 1.6rem; margin-bottom: .75rem; }
+    .article-featured p { margin-bottom: 1.5rem; }
+
+    /* Article card */
+    .article-card {
+      display: grid; grid-template-columns: 120px 1fr; gap: 1.25rem;
+      background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 1.25rem; margin-bottom: 1.25rem; align-items: center;
+      transition: transform .18s, box-shadow .18s; cursor: pointer;
+    }
+    .article-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-h); }
+    .article-card .art-thumb {
+      border-radius: 10px; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+    }
+    .article-card h3 { font-size: 1.05rem; margin-bottom: .35rem; }
+    .article-card p { font-size: .88rem; margin-bottom: .75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .art-meta { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .art-date { font-size: .8rem; color: var(--text-l); }
+    .art-cat { font-size: .75rem; font-weight: 700; padding: .2rem .65rem; border-radius: 50px; }
+
+    /* Article modal */
+    .article-modal {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.7); align-items: flex-start; justify-content: center;
+      padding: 2rem; overflow-y: auto;
+    }
+    .article-modal.open { display: flex; }
+    .article-modal-inner {
+      max-width: 740px; width: 100%; background: var(--bg);
+      border-radius: var(--radius-l); overflow: hidden; position: relative;
+      margin: auto; animation: modalIn .25s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+    .article-modal-img { width: 100%; height: 260px; display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+    .article-modal-body { padding: 2rem 2.5rem; }
+    .article-modal-body h2 { margin-bottom: .75rem; }
+    .article-modal-body .art-meta { margin-bottom: 1.25rem; }
+    .article-modal-body p { margin-bottom: 1rem; }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 38px; height: 38px; background: rgba(0,0,0,.5); color: #fff;
+      border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: background .18s;
+    }
+    .modal-close:hover { background: rgba(0,0,0,.85); }
+
+    /* Sidebar */
+    .sidebar { position: sticky; top: 88px; }
+    .sidebar-card { background: var(--bg2); border-radius: var(--radius-l); padding: 1.75rem; margin-bottom: 1.5rem; }
+    .sidebar-card h3 { font-size: 1rem; margin-bottom: 1.1rem; padding-bottom: .75rem; border-bottom: 2px solid var(--border); }
+    .sidebar-news-item { display: flex; gap: .9rem; margin-bottom: 1rem; align-items: flex-start; cursor: pointer; }
+    .sidebar-news-item:hover .snews-title { color: var(--blue); }
+    .snews-icon { width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .snews-title { font-weight: 600; font-size: .88rem; line-height: 1.3; margin-bottom: .2rem; }
+    .snews-date { font-size: .75rem; color: var(--text-l); }
+    .game-of-month { text-align: center; }
+    .game-of-month .gom-badge { background: var(--orange-l); color: var(--orange); border-radius: 50px; padding: .3rem .9rem; font-size: .75rem; font-weight: 700; display: inline-block; margin-bottom: .75rem; }
+    .game-of-month h4 { font-size: 1.15rem; margin-bottom: .3rem; }
+    .game-of-month .gom-ico { font-size: 4rem; margin: .75rem 0; }
+    .game-of-month p { font-size: .85rem; margin-bottom: 1rem; }
+    .quick-links li { margin-bottom: .6rem; }
+    .quick-links a { font-size: .9rem; color: var(--blue); font-weight: 600; display: flex; align-items: center; gap: .4rem; }
+    .quick-links a:hover { color: var(--blue-d); text-decoration: underline; }
+
+    @media (max-width: 1024px) {
+      .blog-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+    @media (max-width: 640px) {
+      .article-card { grid-template-columns: 80px 1fr; }
+      .article-modal-body { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🎲</div>
+      <div><div class="logo-text">ENJOGASSATS</div><div class="logo-sub">Vall de Segó</div></div>
+    </a>
+    <nav>
+      <a href="index.html"      class="nav-link">Inici</a>
+      <a href="eventos.html"    class="nav-link">Esdeveniments</a>
+      <a href="galeria.html"    class="nav-link">Galeria</a>
+      <a href="novedades.html"  class="nav-link active">Novetats</a>
+      <a href="contacto.html"   class="nav-link">Contacte</a>
+      <a href="contacto.html#soci" class="btn btn-primary btn-sm nav-cta">Uneix-te</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Obrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html"     class="nav-link">🏠 Inici</a>
+  <a href="eventos.html"   class="nav-link">📅 Esdeveniments</a>
+  <a href="galeria.html"   class="nav-link">🖼️ Galeria</a>
+  <a href="novedades.html" class="nav-link active">📰 Novetats</a>
+  <a href="contacto.html"  class="nav-link">✉️ Contacte</a>
+  <a href="contacto.html#soci" class="btn btn-primary">Uneix-te a l'associació</a>
+</div>
+
+<div class="page-hero">
+  <h1>📰 Novetats</h1>
+  <p>Les últimes notícies, ressenyes i novetats de la nostra associació</p>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="blog-layout">
+      <!-- Main column -->
+      <main>
+
+        <!-- Featured article -->
+        <article class="article-featured fade-up" data-art="0">
+          <div class="art-img" style="background:linear-gradient(135deg,#06A77D,#2E86AB)">📚</div>
+          <div class="art-body">
+            <div class="art-meta" style="margin-bottom:1rem">
+              <span class="badge badge-green">Notícia</span>
+              <span class="art-date">📅 15 abril 2025</span>
+            </div>
+            <h2>Estrenem el Banc de Jocs: més de 200 títols disponibles per als socis</h2>
+            <p>L'Enjogassats estrena el seu servei de préstec de jocs amb un catàleg inicial de 207 títols, des de clàssics com Catan i Carcassonne fins a les últimes novetats del mercat. Els socis de ple dret poden emportar-se fins a 2 jocs per un període de dues setmanes.</p>
+            <a href="#" class="btn btn-secondary" data-art-btn="0">Llegir l'article complet →</a>
+          </div>
+        </article>
+
+        <!-- Article list -->
+        <article class="article-card fade-up" data-art="1">
+          <div class="art-thumb" style="background:linear-gradient(135deg,#F77F00,#e05d00)">🎲</div>
+          <div>
+            <div class="art-meta">
+              <span class="art-cat badge badge-orange">Resum event</span>
+              <span class="art-date">📅 2 abril 2025</span>
+            </div>
+            <h3>Resum de l'última jornada: Abril de rècord amb 45 participants</h3>
+            <p>La jornada d'abril ha sigut la més concorreguda de la nostra història. Feia una tarda de primavera perfecta i el casal estava ple fins als límits de l'aforament.</p>
+            <a href="#" class="btn btn-outline btn-sm" data-art-btn="1">Llegir més →</a>
+          </div>
+        </article>
+
+        <article class="article-card fade-up" data-art="2">
+          <div class="art-thumb" style="background:linear-gradient(135deg,#8b5cf6,#06A77D)">🏔️</div>
+          <div>
+            <div class="art-meta">
+              <span class="art-cat badge badge-blue">Joc del mes</span>
+              <span class="art-date">📅 1 abril 2025</span>
+            </div>
+            <h3>Joc del mes: Terraforming Mars – Guia per a principiants</h3>
+            <p>Terraforming Mars és el joc d'abril. En aquest article us expliquem les mecàniques bàsiques, estratègies inicials i per quin expansió recomanem començar.</p>
+            <a href="#" class="btn btn-outline btn-sm" data-art-btn="2">Llegir més →</a>
+          </div>
+        </article>
+
+        <article class="article-card fade-up" data-art="3">
+          <div class="art-thumb" style="background:linear-gradient(135deg,#2E86AB,#1e6a8a)">📖</div>
+          <div>
+            <div class="art-meta">
+              <span class="art-cat badge badge-blue">Col·laboració</span>
+              <span class="art-date">📅 18 març 2025</span>
+            </div>
+            <h3>Col·laboració amb la Biblioteca Municipal de Faura</h3>
+            <p>Hem signat un conveni amb la Biblioteca Municipal de Faura per integrar el nostre fons de jocs en el seu catàleg. A partir d'ara, qualsevol veí podrà accedir-hi.</p>
+            <a href="#" class="btn btn-outline btn-sm" data-art-btn="3">Llegir més →</a>
+          </div>
+        </article>
+
+        <article class="article-card fade-up" data-art="4">
+          <div class="art-thumb" style="background:linear-gradient(135deg,#06A77D,#F77F00)">🏆</div>
+          <div>
+            <div class="art-meta">
+              <span class="art-cat badge badge-orange">Torneig</span>
+              <span class="art-date">📅 5 març 2025</span>
+            </div>
+            <h3>Anunci: I Torneig de Catan de la Vall de Segó – Inscripcions obertes!</h3>
+            <p>Obrimos les inscripcions per al primer torneig oficial de Catan de l'associació. Format suïssa, 4 rondes, premi per als tres primers classificats.</p>
+            <a href="#" class="btn btn-outline btn-sm" data-art-btn="4">Llegir més →</a>
+          </div>
+        </article>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+
+        <div class="sidebar-card">
+          <h3>⚡ Últimes novetats</h3>
+          <div class="sidebar-news-item" data-art="1">
+            <div class="snews-icon" style="background:var(--orange-l)">🎲</div>
+            <div><div class="snews-title">Abril de rècord: 45 participants</div><div class="snews-date">2 abril 2025</div></div>
+          </div>
+          <div class="sidebar-news-item" data-art="2">
+            <div class="snews-icon" style="background:#f3f0ff">🏔️</div>
+            <div><div class="snews-title">Joc del mes: Terraforming Mars</div><div class="snews-date">1 abril 2025</div></div>
+          </div>
+          <div class="sidebar-news-item" data-art="3">
+            <div class="snews-icon" style="background:var(--blue-l)">📖</div>
+            <div><div class="snews-title">Col·laboració amb la Biblioteca de Faura</div><div class="snews-date">18 març 2025</div></div>
+          </div>
+          <div class="sidebar-news-item" data-art="0">
+            <div class="snews-icon" style="background:var(--green-l)">📚</div>
+            <div><div class="snews-title">Estrenem el Banc de Jocs</div><div class="snews-date">15 abril 2025</div></div>
+          </div>
+        </div>
+
+        <div class="sidebar-card game-of-month">
+          <div class="gom-badge">🏆 Joc del mes — Abril 2025</div>
+          <div class="gom-ico">🏔️</div>
+          <h4>Terraforming Mars</h4>
+          <p>El gran eurogame de gestió de recursos. Terraforma el planeta vermell amb la teua corporació!</p>
+          <div style="font-size:.8rem;color:var(--text-l);margin-bottom:1rem">
+            👥 1–5 jugadors · ⏱ 120–150 min · 🎯 Dificultat: Mitjana-Alta
+          </div>
+          <a href="#" class="btn btn-orange btn-sm" style="background:var(--orange);color:#fff;border-radius:50px;padding:.5rem 1.2rem;font-weight:600;font-size:.9rem;display:inline-block">Llegir ressenya →</a>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🔗 Accessos ràpids</h3>
+          <ul class="quick-links">
+            <li><a href="eventos.html">📅 Pròxims esdeveniments</a></li>
+            <li><a href="contacto.html#soci">🎲 Fes-te soci (gratuït)</a></li>
+            <li><a href="contacto.html#voluntariat">🙋 Voluntariat</a></li>
+            <li><a href="galeria.html">🖼️ Galeria de fotos</a></li>
+            <li><a href="contacto.html">✉️ Contacta'ns</a></li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Article modal -->
+<div class="article-modal" id="articleModal" role="dialog" aria-modal="true">
+  <div class="article-modal-inner">
+    <button class="modal-close" id="modalClose" aria-label="Tancar article">✕</button>
+    <div class="article-modal-img" id="modalImg"></div>
+    <div class="article-modal-body">
+      <div class="art-meta" id="modalMeta" style="margin-bottom:1rem"></div>
+      <h2 id="modalTitle"></h2>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🎲 ENJOGASSATS</div>
+        <p class="footer-tagline">Associació Lúdica i Cultural<br>de la Vall de Segó</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook">f</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div><h4>Navegació</h4><ul><li><a href="index.html">Inici</a></li><li><a href="eventos.html">Esdeveniments</a></li><li><a href="galeria.html">Galeria</a></li><li><a href="novedades.html">Novetats</a></li><li><a href="contacto.html">Contacte</a></li></ul></div>
+      <div><h4>L'associació</h4><ul><li><a href="contacto.html#soci">Fes-te soci</a></li><li><a href="contacto.html#voluntariat">Voluntariat</a></li></ul></div>
+      <div><h4>Contacte</h4><ul><li>📧 enjogassats@gmail.com</li><li>📍 Faura, Vall de Segó, València</li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Enjogassats – Associació Lúdica i Cultural de la Vall de Segó</span>
+      <span>Fet amb ❤️ i molts jocs de taula</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Article data
+  const articles = [
+    {
+      emoji: '📚', bg: 'linear-gradient(135deg,#06A77D,#2E86AB)',
+      cat: '<span class="badge badge-green">Notícia</span>',
+      date: '15 abril 2025',
+      title: 'Estrenem el Banc de Jocs: més de 200 títols disponibles per als socis',
+      body: `<p>L'Enjogassats estrena el seu servei de préstec de jocs amb un catàleg inicial de 207 títols, des de clàssics com Catan i Carcassonne fins a les últimes novetats del mercat.</p>
+      <p>Els socis de ple dret poden emportar-se fins a 2 jocs per un període de dues setmanes. La devolució es fa a les jornades mensuals o a la seu de l'associació a Faura els dimecres de 18h a 20h.</p>
+      <p>El banc de jocs és el resultat de mesos de treball del nostre equip de voluntaris, que han catalogat, embalat i organitzat tots els jocs. Agraïm especialment les donacions de jocs de diversos socis fundadors.</p>
+      <p><strong>Com accedir al préstec:</strong> Fes-te soci de ple dret (15€/any), cerca el joc al nostre catàleg en línia i reserva'l per a la pròxima jornada o recollida presencial.</p>`
+    },
+    {
+      emoji: '🎲', bg: 'linear-gradient(135deg,#F77F00,#e05d00)',
+      cat: '<span class="badge badge-orange">Resum event</span>',
+      date: '2 abril 2025',
+      title: 'Resum de l\'última jornada: Abril de rècord amb 45 participants',
+      body: `<p>La jornada d'abril ha sigut la més concorreguda de la nostra història amb 45 participants, superant el rècord anterior de 38 persones establert el desembre de 2024.</p>
+      <p>Entre els jocs més jugats destaquen Terraforming Mars (3 taules simultànies), Wingspan, i una partida maratoniana de Gloomhaven que va durar 5 hores.</p>
+      <p>Els nous socis es van incorporar sense problemes gràcies al sistema de tutors voluntaris que ajuden les persones que venen per primera vegada. Un gran èxit que repetirem!</p>`
+    },
+    {
+      emoji: '🏔️', bg: 'linear-gradient(135deg,#8b5cf6,#06A77D)',
+      cat: '<span class="badge badge-blue">Joc del mes</span>',
+      date: '1 abril 2025',
+      title: 'Joc del mes: Terraforming Mars – Guia per a principiants',
+      body: `<p>Terraforming Mars és un joc de gestió de recursos i col·locació de cartes per a 1–5 jugadors on cada participant representa una corporació que vol colonitzar el planeta Mart.</p>
+      <p><strong>Mecàniques principals:</strong> Cada torn trieu 2 accions entre 10 possibles: jugar cartes, col·locar tiles, recollir recursos... La partida acaba quan la temperatura, l'oxigen i els oceans arriben al nivell màxim.</p>
+      <p><strong>Per a qui és?</strong> Per a jugadors amb experiència en eurogames de nivell mitjà-alt. La primera partida pot ser llarga (3h+), però a partir de la segona flueix molt millor.</p>
+      <p><strong>Expansió recomanada per a primer contact:</strong> Prelude, que redueix el temps de partida i afegeix un setup més temàtic.</p>`
+    },
+    {
+      emoji: '📖', bg: 'linear-gradient(135deg,#2E86AB,#1e6a8a)',
+      cat: '<span class="badge badge-blue">Col·laboració</span>',
+      date: '18 març 2025',
+      title: 'Col·laboració amb la Biblioteca Municipal de Faura',
+      body: `<p>L'Enjogassats ha signat un conveni de col·laboració amb la Biblioteca Municipal de Faura per facilitar l'accés als jocs de taula a tota la ciutadania.</p>
+      <p>A partir d'ara, el fons de jocs de l'associació estarà disponible per a préstec a través del sistema de la biblioteca, accessible a tots els veïns empadronats als municipis de la Vall de Segó.</p>
+      <p>La biblioteca també acollirà sessions de jocs obertes cada primer dissabte del mes de 10h a 13h, amb monitors de l'associació que ajudaran els nous jugadors.</p>`
+    },
+    {
+      emoji: '🏆', bg: 'linear-gradient(135deg,#06A77D,#F77F00)',
+      cat: '<span class="badge badge-orange">Torneig</span>',
+      date: '5 març 2025',
+      title: 'Anunci: I Torneig de Catan de la Vall de Segó – Inscripcions obertes!',
+      body: `<p>Anunciem amb orgull el primer torneig oficial de Catan organitzat per l'Enjogassats! Serà el 24 de maig de 2025 al Centre Cívic de Sagunt.</p>
+      <p><strong>Format:</strong> 4 rondes suïsses de 90 minuts cadascuna, seguides d'una final entre els 4 millors classificats.</p>
+      <p><strong>Premis:</strong> Trofeu per als tres primers + lots de jocs de taula donats per les nostres botigues col·laboradores.</p>
+      <p><strong>Inscripció:</strong> Gratuïta per als socis de ple dret. 5€ per als simpatitzants i persones externes. Places limitades a 24 participants.</p>`
+    }
+  ];
+
+  function openArticle(idx) {
+    const a = articles[idx];
+    const modal = document.getElementById('articleModal');
+    document.getElementById('modalImg').style.cssText = `background:${a.bg};`;
+    document.getElementById('modalImg').textContent = a.emoji;
+    document.getElementById('modalMeta').innerHTML = a.cat + `<span class="art-date">📅 ${a.date}</span>`;
+    document.getElementById('modalTitle').textContent = a.title;
+    document.getElementById('modalContent').innerHTML = a.body;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Open modal from articles
+  document.querySelectorAll('[data-art]').forEach(el => {
+    el.addEventListener('click', () => openArticle(parseInt(el.dataset.art)));
+  });
+  document.querySelectorAll('[data-art-btn]').forEach(el => {
+    el.addEventListener('click', (e) => { e.stopPropagation(); openArticle(parseInt(el.dataset.artBtn)); });
+  });
+
+  // Close modal
+  document.getElementById('modalClose').addEventListener('click', () => {
+    document.getElementById('articleModal').classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  document.getElementById('articleModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('articleModal')) {
+      document.getElementById('articleModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { document.getElementById('articleModal').classList.remove('open'); document.body.style.overflow = ''; }
+  });
+
+  // Fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

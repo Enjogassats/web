@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ca-valencia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esdeveniments – Enjogassats</title>
+  <meta name="description" content="Pròxims esdeveniments i jornades d'Enjogassats, associació lúdica de la Vall de Segó.">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #0d2233 0%, #1e4d6b 100%);
+      padding: 7rem 1.5rem 4rem; color: #fff; text-align: center;
+    }
+    .page-hero h1 { color: #fff; margin-bottom: .75rem; }
+    .page-hero p { color: rgba(255,255,255,.7); font-size: 1.1rem; }
+
+    /* Calendar strip */
+    .calendar-strip {
+      display: flex; gap: .75rem; overflow-x: auto; padding-bottom: .5rem;
+      scrollbar-width: thin;
+    }
+    .cal-month {
+      flex-shrink: 0; background: var(--bg); border-radius: 14px;
+      padding: 1rem 1.25rem; border: 2px solid var(--border);
+      cursor: pointer; transition: all .2s; text-align: center; min-width: 90px;
+    }
+    .cal-month:hover, .cal-month.active {
+      border-color: var(--blue); background: var(--blue-l); color: var(--blue);
+    }
+    .cal-month .mn { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; opacity: .6; }
+    .cal-month .yr { font-family: var(--font-h); font-weight: 800; font-size: 1.5rem; }
+    .cal-month .cnt { font-size: .75rem; font-weight: 700; color: var(--orange); }
+
+    /* Event list items */
+    .event-list-item {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      gap: 1.5rem; align-items: center;
+      background: var(--bg); border-radius: var(--radius);
+      padding: 1.5rem; box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s; margin-bottom: 1rem;
+    }
+    .event-list-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-h); }
+    .event-date-box {
+      background: var(--blue); color: #fff; border-radius: 12px;
+      padding: .75rem .5rem; text-align: center; flex-shrink: 0;
+    }
+    .event-date-box .day { font-family: var(--font-h); font-weight: 900; font-size: 1.8rem; line-height: 1; }
+    .event-date-box .month { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; opacity: .85; }
+    .event-info h3 { margin-bottom: .3rem; font-size: 1.15rem; }
+    .event-info .meta { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
+    .event-info p { font-size: .9rem; margin: 0; }
+    .event-actions { display: flex; flex-direction: column; gap: .5rem; align-items: flex-end; }
+
+    /* Google Calendar placeholder */
+    .gcal-placeholder {
+      background: var(--bg2); border-radius: var(--radius-l);
+      border: 2px dashed var(--border); padding: 3rem 2rem;
+      text-align: center; color: var(--text-l);
+    }
+    .gcal-placeholder .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    /* Past events grid */
+    .past-card { position: relative; border-radius: var(--radius-l); overflow: hidden; }
+    .past-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .past-card-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.8), transparent);
+      padding: 1.5rem 1rem 1rem; color: #fff;
+    }
+    .past-card-overlay h4 { color: #fff; font-size: .95rem; margin-bottom: .2rem; }
+    .past-card-overlay span { font-size: .78rem; opacity: .75; }
+
+    /* Voluntari CTA */
+    .vol-cta {
+      background: linear-gradient(120deg, var(--orange), #e05d00);
+      border-radius: var(--radius-l); padding: 3rem 2rem;
+      text-align: center; color: #fff;
+    }
+    .vol-cta h2 { color: #fff; margin-bottom: .75rem; }
+    .vol-cta p { color: rgba(255,255,255,.85); margin-bottom: 1.5rem; }
+
+    @media (max-width: 640px) {
+      .event-list-item { grid-template-columns: 64px 1fr; }
+      .event-actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🎲</div>
+      <div><div class="logo-text">ENJOGASSATS</div><div class="logo-sub">Vall de Segó</div></div>
+    </a>
+    <nav>
+      <a href="index.html"      class="nav-link">Inici</a>
+      <a href="eventos.html"    class="nav-link active">Esdeveniments</a>
+      <a href="galeria.html"    class="nav-link">Galeria</a>
+      <a href="novedades.html"  class="nav-link">Novetats</a>
+      <a href="contacto.html"   class="nav-link">Contacte</a>
+      <a href="contacto.html#soci" class="btn btn-primary btn-sm nav-cta">Uneix-te</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Obrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html"     class="nav-link">🏠 Inici</a>
+  <a href="eventos.html"   class="nav-link active">📅 Esdeveniments</a>
+  <a href="galeria.html"   class="nav-link">🖼️ Galeria</a>
+  <a href="novedades.html" class="nav-link">📰 Novetats</a>
+  <a href="contacto.html"  class="nav-link">✉️ Contacte</a>
+  <a href="contacto.html#soci" class="btn btn-primary">Uneix-te a l'associació</a>
+</div>
+
+<!-- Page hero -->
+<div class="page-hero">
+  <h1>📅 Esdeveniments</h1>
+  <p>Totes les jornades, torneigs i tallers de l'Enjogassats</p>
+</div>
+
+<!-- ===== PRÒXIMS ESDEVENIMENTS ===== -->
+<section class="section" aria-labelledby="propers-title">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Agenda 2025</span>
+      <h2 id="propers-title">Pròxims esdeveniments</h2>
+    </div>
+
+    <!-- Month filter strip -->
+    <div class="calendar-strip fade-up" role="tablist" aria-label="Filtrar per mes">
+      <div class="cal-month active" role="tab" aria-selected="true" data-month="all">
+        <div class="mn">Tots</div><div class="yr" style="font-size:1rem;margin-top:.2rem">2025</div><div class="cnt">6 ev.</div>
+      </div>
+      <div class="cal-month" role="tab" data-month="5">
+        <div class="mn">Maig</div><div class="yr">25</div><div class="cnt">2 ev.</div>
+      </div>
+      <div class="cal-month" role="tab" data-month="6">
+        <div class="mn">Juny</div><div class="yr">25</div><div class="cnt">2 ev.</div>
+      </div>
+      <div class="cal-month" role="tab" data-month="7">
+        <div class="mn">Juliol</div><div class="yr">25</div><div class="cnt">1 ev.</div>
+      </div>
+      <div class="cal-month" role="tab" data-month="9">
+        <div class="mn">Setembre</div><div class="yr">25</div><div class="cnt">1 ev.</div>
+      </div>
+    </div>
+
+    <div id="eventList" style="margin-top:2rem">
+
+      <article class="event-list-item fade-up" data-month="5">
+        <div class="event-date-box" style="background:var(--blue)">
+          <div class="day">10</div><div class="month">Maig</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge badge-blue">Jornada</span>
+            <span class="badge badge-green">Entrada lliure</span>
+          </div>
+          <h3>Jornada Mensual de Maig</h3>
+          <p>Tarda de jocs de taula a la sala polivalent de Faura. Portem Catan, Pandemic, Carcassonne, Dixit i molts més. Apte per a tots els nivells i edats.</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕔 17:00h – 22:00h</span>
+            <span>📍 Sala Polivalent, Faura</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-outline btn-sm">Inscriu-te</a>
+          <span style="font-size:.8rem;color:var(--text-l);text-align:right">Aforament lliure</span>
+        </div>
+      </article>
+
+      <article class="event-list-item fade-up" data-month="5">
+        <div class="event-date-box" style="background:var(--orange)">
+          <div class="day">24</div><div class="month">Maig</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge badge-orange">Torneig</span>
+            <span class="badge badge-orange">Places limitades</span>
+          </div>
+          <h3>I Torneig de Catan de la Vall de Segó</h3>
+          <p>Primera edició del torneig oficial! El format és suïssa a 4 rondes. Inscripció gratuïta per als socis, 5€ per als no socis. Trofeu per als tres primers classificats.</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕔 10:00h – 18:00h</span>
+            <span>📍 Centre Cívic, Sagunt</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-primary btn-sm">Inscriu-te</a>
+          <span style="font-size:.8rem;color:var(--orange);font-weight:700">12/24 places</span>
+        </div>
+      </article>
+
+      <article class="event-list-item fade-up" data-month="6">
+        <div class="event-date-box" style="background:var(--green)">
+          <div class="day">07</div><div class="month">Juny</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge badge-green">Taller</span>
+            <span class="badge badge-blue">Iniciació</span>
+          </div>
+          <h3>Taller d'Iniciació al Joc de Rol</h3>
+          <p>Mai has jugat a rol? El nostre mestre de joc t'introduirà al món de Dungeons & Dragons 5a edició en una aventura curta i accessible. Materials inclosos.</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕕 18:00h – 22:00h</span>
+            <span>📍 Biblioteca, Albalat dels Sorells</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-outline btn-sm">Inscriu-te</a>
+          <span style="font-size:.8rem;color:var(--orange);font-weight:700">5/8 places</span>
+        </div>
+      </article>
+
+      <article class="event-list-item fade-up" data-month="6">
+        <div class="event-date-box" style="background:var(--blue)">
+          <div class="day">21</div><div class="month">Juny</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge badge-blue">Jornada</span>
+            <span class="badge badge-green">Entrada lliure</span>
+          </div>
+          <h3>Jornada d'Estiu – Jocs Llargs</h3>
+          <p>Jornada especial amb partides de jocs d'estratègia llargs: Terraforming Mars, Gloomhaven, Twilight Imperium. Reserva la teua taula amb antelació.</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕙 10:00h – 21:00h</span>
+            <span>📍 Sala Polivalent, Faura</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-outline btn-sm">Reserva taula</a>
+          <span style="font-size:.8rem;color:var(--text-l)">Aforament lliure</span>
+        </div>
+      </article>
+
+      <article class="event-list-item fade-up" data-month="7">
+        <div class="event-date-box" style="background:#8b5cf6">
+          <div class="day">12</div><div class="month">Juliol</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge" style="background:#f3f0ff;color:#8b5cf6">Especial</span>
+          </div>
+          <h3>Nit de Jocs – Maratón Nocturna</h3>
+          <p>Una nit sencera de jocs! De 21h a 6h del matí, amb pauses per sopar i berenar. Porta el teu sac de dormir per si et quedes!</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕘 21:00h – 06:00h</span>
+            <span>📍 Casal Faller, Faura</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-outline btn-sm">Inscriu-te</a>
+          <span style="font-size:.8rem;color:var(--orange);font-weight:700">Socis: gratuït</span>
+        </div>
+      </article>
+
+      <article class="event-list-item fade-up" data-month="9">
+        <div class="event-date-box" style="background:var(--green)">
+          <div class="day">13</div><div class="month">Set.</div>
+        </div>
+        <div class="event-info">
+          <div class="meta">
+            <span class="badge badge-green">Taller</span>
+          </div>
+          <h3>Taller de Disseny de Jocs de Taula</h3>
+          <p>Aprèn les bases del disseny de jocs de taula: mecàniques, playtesting i presentació. Impartit per en Miquel, dissenyador amateur i soci fundador.</p>
+          <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.85rem;color:var(--text-l)">
+            <span>🕔 16:00h – 20:00h</span>
+            <span>📍 Biblioteca, Faura</span>
+          </div>
+        </div>
+        <div class="event-actions">
+          <a href="contacto.html" class="btn btn-outline btn-sm">Inscriu-te</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Google Calendar placeholder -->
+    <div style="margin-top:3rem">
+      <h3 style="margin-bottom:1.25rem">📆 Google Calendar</h3>
+      <div class="gcal-placeholder fade-up">
+        <div class="icon">📅</div>
+        <p style="font-weight:600;color:var(--text);margin-bottom:.5rem">Afig els nostres esdeveniments al teu Google Calendar</p>
+        <p style="margin-bottom:1.5rem">Aquí s'integrarà el calendari de Google. Pots subscriure't per rebre notificacions automàtiques de nous esdeveniments.</p>
+        <a href="#" class="btn btn-secondary btn-sm">Subscriure's al calendari</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== ESDEVENIMENTS PASSATS ===== -->
+<section class="section section-bg" aria-labelledby="passats-title">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Arxiu</span>
+      <h2 id="passats-title">Esdeveniments passats</h2>
+      <p>Reviu els millors moments de les nostres jornades anteriors.</p>
+    </div>
+    <div class="grid-3">
+      <div class="past-card card fade-up">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#2E86AB,#06A77D)">🎲</div>
+        <div class="past-card-overlay">
+          <h4>Jornada de Nadal 2024</h4>
+          <span>📅 21 desembre 2024 · Faura</span>
+        </div>
+      </div>
+      <div class="past-card card fade-up fade-up-d1">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#F77F00,#e05d00)">🏆</div>
+        <div class="past-card-overlay">
+          <h4>Torneig de Tardor – Terraforming Mars</h4>
+          <span>📅 15 novembre 2024 · Sagunt</span>
+        </div>
+      </div>
+      <div class="past-card card fade-up fade-up-d2">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#06A77D,#1a8f6a)">🧙</div>
+        <div class="past-card-overlay">
+          <h4>Campanya de Rol – La Maldició de Strahd</h4>
+          <span>📅 Octubre 2024 · Albalat dels Sorells</span>
+        </div>
+      </div>
+      <div class="past-card card fade-up">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">🎪</div>
+        <div class="past-card-overlay">
+          <h4>I Fira Lúdica de la Vall de Segó</h4>
+          <span>📅 Setembre 2024 · Faura</span>
+        </div>
+      </div>
+      <div class="past-card card fade-up fade-up-d1">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#2E86AB,#8b5cf6)">🌿</div>
+        <div class="past-card-overlay">
+          <h4>Jornada d'Estiu 2024</h4>
+          <span>📅 Juliol 2024 · Casal, Faura</span>
+        </div>
+      </div>
+      <div class="past-card card fade-up fade-up-d2">
+        <div class="past-card-img" style="background:linear-gradient(135deg,#F77F00,#06A77D)">📚</div>
+        <div class="past-card-overlay">
+          <h4>Taller Introducció a l'Eurogame</h4>
+          <span>📅 Març 2024 · Biblioteca Faura</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-2">
+      <a href="galeria.html" class="btn btn-secondary">Veure tota la galeria →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VOLUNTARIAT CTA ===== -->
+<section class="section" aria-label="Voluntariat">
+  <div class="section-inner">
+    <div class="vol-cta fade-up">
+      <h2>🙋 Vols col·laborar com a voluntari?</h2>
+      <p>L'associació funciona gràcies a persones com tu. Ajuda'ns a organitzar jornades, explicar jocs o gestionar el banc de jocs.</p>
+      <a href="contacto.html#voluntariat" class="btn btn-ghost">Saber-ne més sobre el voluntariat</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🎲 ENJOGASSATS</div>
+        <p class="footer-tagline">Associació Lúdica i Cultural<br>de la Vall de Segó</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook">f</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegació</h4>
+        <ul>
+          <li><a href="index.html">Inici</a></li>
+          <li><a href="eventos.html">Esdeveniments</a></li>
+          <li><a href="galeria.html">Galeria</a></li>
+          <li><a href="novedades.html">Novetats</a></li>
+          <li><a href="contacto.html">Contacte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>L'associació</h4>
+        <ul>
+          <li><a href="contacto.html#soci">Fes-te soci</a></li>
+          <li><a href="contacto.html#voluntariat">Voluntariat</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacte</h4>
+        <ul>
+          <li>📧 enjogassats@gmail.com</li>
+          <li>📍 Faura, Vall de Segó, València</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Enjogassats – Associació Lúdica i Cultural de la Vall de Segó</span>
+      <span>Fet amb ❤️ i molts jocs de taula</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Month filter
+  document.querySelectorAll('.cal-month').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cal-month').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const month = btn.dataset.month;
+      document.querySelectorAll('#eventList article').forEach(item => {
+        item.style.display = (month === 'all' || item.dataset.month === month) ? '' : 'none';
+      });
+    });
+  });
+
+  // Fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
