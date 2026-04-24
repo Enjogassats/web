@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Missatge enviat · Enjogassats</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --dark: #1a1a2e; --orange: #F77F00; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem; text-align: center;
+    }
+    .success-card {
+      background: #fff; border-radius: 16px;
+      padding: 3.5rem 3rem; max-width: 520px; width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .success-icon { font-size: 4rem; margin-bottom: 1.2rem; display: block; }
+    h1 { font-size: 2rem; font-weight: 900; color: var(--dark); margin-bottom: 1rem; }
+    p { font-size: 1.05rem; color: #555; line-height: 1.65; margin-bottom: 2rem; }
+    .btn-back {
+      display: inline-block;
+      background: var(--orange); color: #fff;
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-back:hover { background: #e06e00; transform: translateY(-2px); }
+    .brand { margin-top: 2rem; font-size: 0.85rem; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="success-card">
+    <span class="success-icon" aria-hidden="true">✅</span>
+    <h1>Missatge enviat!</h1>
+    <p>Gràcies per contactar amb Enjogassats. Hem rebut el teu missatge i et respondrem el més aviat possible.</p>
+    <a href="index.html" class="btn-back">Tornar a l'inici</a>
+    <p class="brand">Enjogassats · Associació Lúdica i Cultural de la Vall de Segó</p>
+  </div>
+</body>
+</html>
