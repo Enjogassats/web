@@ -162,29 +162,142 @@
     .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--dark); }
     .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
 
-    /* ── EVENTS ── */
-    #esdeveniments { background: var(--gray-light); }
-    .event-card {
-      max-width: 820px; margin: 0 auto;
-      background: #fff; border-radius: var(--radius);
-      box-shadow: var(--shadow-hover);
-      border-left: 5px solid var(--orange);
-      padding: 2.5rem;
-      position: relative;
+    /* ── EVENTS (RPG redesign) ── */
+    #esdeveniments {
+      background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.62)),
+                  url('hero-enrolats.jpg') center / cover no-repeat;
+      padding: 80px 2rem;
+      position: relative; overflow: hidden;
     }
-    .event-badge {
-      display: inline-block; background: var(--orange); color: #fff;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; padding: 0.3rem 0.9rem;
-      border-radius: 99px; margin-bottom: 1.2rem;
+    #esdeveniments .section-title { color: #fff; }
+    #esdeveniments .section-divider { background: var(--orange); }
+
+    /* Hex grid texture */
+    #esdeveniments .evt-bg-pattern {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.05;
     }
-    .event-card h3 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--dark); margin-bottom: 0.8rem; }
-    .event-card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.65; }
-    .event-details { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-    .event-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: var(--text); font-weight: 500; }
-    .event-detail span { font-size: 1.1rem; }
-    .event-cta-area { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .event-note { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+    /* Main card */
+    .evt-card {
+      max-width: 860px; margin: 0 auto; position: relative; z-index: 2;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(247,127,0,0.4);
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(247,127,0,0.15);
+      padding: 48px;
+    }
+
+    /* Top row badges */
+    .evt-top-row {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0;
+    }
+    .evt-pill {
+      display: inline-block;
+      border: 1px solid #F77F00; color: #F77F00;
+      background: transparent;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 99px;
+    }
+
+    /* Title */
+    .evt-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; color: #fff;
+      letter-spacing: 2px; text-align: center;
+      margin: 24px 0 8px;
+      text-shadow: 0 0 30px rgba(247,127,0,0.5);
+      text-transform: uppercase;
+    }
+
+    /* Tagline */
+    .evt-tagline {
+      text-align: center; color: #aaa;
+      font-size: 1rem; letter-spacing: 1px;
+    }
+
+    /* Divider with dice */
+    .evt-divider {
+      display: flex; align-items: center; gap: 0;
+      margin: 32px 0;
+    }
+    .evt-divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to var(--dir, right), transparent, rgba(247,127,0,0.4));
+    }
+    .evt-divider-line.right { --dir: left; }
+    .evt-divider-dice { font-size: 1.4rem; padding: 0 1rem; }
+
+    /* Countdown */
+    .evt-countdown {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .evt-cd-box {
+      background: rgba(247,127,0,0.1);
+      border: 1px solid rgba(247,127,0,0.3);
+      border-radius: 12px;
+      width: 110px; padding: 20px 16px;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(247,127,0,0.2);
+    }
+    .evt-cd-num {
+      display: block; font-size: 3rem; font-weight: 900;
+      color: #fff; line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .evt-cd-label {
+      display: block; font-size: 0.65rem; font-weight: 700;
+      color: #F77F00; letter-spacing: 2px; text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .evt-cd-colon {
+      font-size: 2rem; color: #fff; opacity: 0.5;
+      padding: 0 6px; margin-bottom: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Activity pills */
+    .evt-activities {
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 0.6rem; margin: 24px 0;
+    }
+    .evt-act-pill {
+      background: rgba(255,255,255,0.08);
+      color: #fff; border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px; border-radius: 20px; font-size: 0.85rem;
+    }
+
+    /* CTA */
+    .evt-cta-wrap { text-align: center; }
+    .evt-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #F77F00, #e06800);
+      color: #fff; text-decoration: none;
+      padding: 16px 48px; border-radius: 30px;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px;
+      box-shadow: 0 8px 30px rgba(247,127,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .evt-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(247,127,0,0.6); }
+
+    .evt-bottom-note {
+      text-align: center; color: #666; font-size: 0.8rem; margin-top: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .evt-card { padding: 32px; }
+      .evt-top-row { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .evt-card { padding: 24px 18px; }
+      .evt-cd-box { width: 70px; padding: 14px 10px; }
+      .evt-cd-num { font-size: 2rem; }
+      .evt-cd-colon { display: none; }
+      .evt-cta { display: block; padding: 16px 24px; }
+    }
 
     /* ── FAQ ── */
     #faq { background: #fff; }
@@ -345,30 +458,76 @@
     </div>
   </section>
 
-  <!-- ══ PROPERS ESDEVENIMENTS ══ -->
+  <!-- ══ PRÒXIM ESDEVENIMENT ══ -->
   <section id="esdeveniments" aria-labelledby="title-events">
-    <h2 class="section-title" id="title-events">Propers Esdeveniments</h2>
+
+    <!-- Hex texture background -->
+    <svg class="evt-bg-pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" aria-hidden="true">
+      <defs>
+        <pattern id="evtHex" x="0" y="0" width="60" height="69" patternUnits="userSpaceOnUse">
+          <polygon points="30,2 58,17 58,52 30,67 2,52 2,17" fill="none" stroke="white" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#evtHex)"/>
+    </svg>
+
+    <h2 class="section-title" id="title-events">Pròxim Esdeveniment</h2>
     <div class="section-divider" aria-hidden="true"></div>
-    <p class="section-subtitle">No et perdes la nostra pròxima trobada</p>
 
-    <article class="event-card">
-      <div class="event-badge">PRÒXIMAMENT</div>
-      <h3>Trobada de Tardor 2026</h3>
-      <p>Una jornada enfocada al públic juvenil i adult amb jocs de rol, el joc de cartes Vampir: La Mascarada, jocs d'estratègia i molt més. Prepara't per a una experiència immersiva!</p>
+    <article class="evt-card">
 
-      <div class="event-details">
-        <div class="event-detail"><span aria-hidden="true">📅</span> Data per confirmar — Vos mantindrem informats!</div>
-        <div class="event-detail"><span aria-hidden="true">📍</span> Lloc per confirmar — Vall de Segó, València</div>
-        <div class="event-detail"><span aria-hidden="true">👥</span> Públic: Juvenil / Adult</div>
+      <!-- Top row -->
+      <div class="evt-top-row">
+        <span class="evt-pill">17 Octubre 2026</span>
+        <span class="evt-pill">Local Anna Lluch · Quartell</span>
       </div>
 
-      <div class="event-cta-area">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-xc8xNEiIwYEJmhr-rDFASIAAsAKNygUG7u6BZJ6hNOY6ng/viewform?usp=publish-editor"
-           target="_blank" rel="noopener" class="btn-primary">
-          Apunta't ara
-        </a>
-        <p class="event-note">Registre obert</p>
+      <!-- Title -->
+      <h3 class="evt-title">Jornada Enrolats 2026</h3>
+      <p class="evt-tagline">Partides de Rol · Jocs de Taula · Combat en Viu · Molt Més</p>
+
+      <!-- Divider -->
+      <div class="evt-divider" aria-hidden="true">
+        <div class="evt-divider-line"></div>
+        <span class="evt-divider-dice">🎲</span>
+        <div class="evt-divider-line right"></div>
       </div>
+
+      <!-- Countdown -->
+      <div class="evt-countdown" aria-label="Compte enrere per a l'esdeveniment">
+        <div class="evt-cd-box">
+          <span class="evt-cd-num" id="cd-days">--</span>
+          <span class="evt-cd-label">Dies</span>
+        </div>
+        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
+        <div class="evt-cd-box">
+          <span class="evt-cd-num" id="cd-hours">--</span>
+          <span class="evt-cd-label">Hores</span>
+        </div>
+        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
+        <div class="evt-cd-box">
+          <span class="evt-cd-num" id="cd-mins">--</span>
+          <span class="evt-cd-label">Minuts</span>
+        </div>
+        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
+        <div class="evt-cd-box">
+          <span class="evt-cd-num" id="cd-secs">--</span>
+          <span class="evt-cd-label">Segons</span>
+        </div>
+      </div>
+
+      <!-- Activity pills -->
+      <div class="evt-activities" aria-label="Activitats de la jornada">
+        <span class="evt-act-pill">🐉 Rol</span>
+        <span class="evt-act-pill">🎲 Jocs de Taula</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="evt-cta-wrap">
+        <a href="enrolats2026.html" class="evt-cta">Descobreix la Jornada Enrolats →</a>
+        <p class="evt-bottom-note">🎟️ Entrada gratuïta · Apunta't ara</p>
+      </div>
+
     </article>
   </section>
 
@@ -445,7 +604,7 @@
       <div class="footer-col">
         <h4>Contacte</h4>
         <ul>
-          <li><a href="/cdn-cgi/l/email-protection#8ce9e2e6e3ebedffffedf8ffa2f8fee3eeede8edccebe1ede5e0a2efe3e1">📧 <span class="__cf_email__" data-cfemail="40252e2a2f272133332134336e34322f2221242100272d21292c6e232f2d">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:enjogassats.trobada@gmail.com">📧 enjogassats.trobada@gmail.com</a></li>
           <li><a href="#whatsapp">📱 Canal de WhatsApp</a></li>
           <li><a href="https://instagram.com/enjogassats.associacio" target="_blank" rel="noopener">📸 @enjogassats.associacio</a></li>
         </ul>
@@ -468,7 +627,7 @@
   </footer>
 
   <!-- ══ JS ══ -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Mobile menu toggle
     function toggleMenu(btn) {
       const menu = document.querySelector('.mobile-menu');
@@ -494,6 +653,42 @@
         hamburger.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // Countdown to Jornada Enrolats 2026
+    (function() {
+      var target = new Date("2026-10-17T09:00:00+02:00");
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function update() {
+        var now  = new Date();
+        var diff = target - now;
+        if (diff <= 0) {
+          document.getElementById('cd-days').textContent  = '00';
+          document.getElementById('cd-hours').textContent = '00';
+          document.getElementById('cd-mins').textContent  = '00';
+          document.getElementById('cd-secs').textContent  = '00';
+          var cta = document.querySelector('.evt-cta');
+          if (cta) cta.textContent = '🎲 Avui és el gran dia!';
+          return;
+        }
+        var days  = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var mins  = Math.floor((diff % 3600000)  / 60000);
+        var secs  = Math.floor((diff % 60000)    / 1000);
+        document.getElementById('cd-days').textContent  = days;
+        document.getElementById('cd-hours').textContent = pad(hours);
+        document.getElementById('cd-mins').textContent  = pad(mins);
+        document.getElementById('cd-secs').textContent  = pad(secs);
+      }
+      update();
+      setInterval(update, 1000);
+      // Blink colons
+      var colons = document.querySelectorAll('.cd-colon');
+      setInterval(function() {
+        colons.forEach(function(c) {
+          c.style.opacity = c.style.opacity === '0' ? '0.5' : '0';
+        });
+      }, 1000);
+    })();
 
     // Add nav scroll effect
     window.addEventListener('scroll', function() {

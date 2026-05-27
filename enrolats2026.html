@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jornada Enrolats 2026 · Enjogassats</title>
+  <meta name="description" content="Jornada Enrolats 2026: una jornada de rol, jocs de taula, tallers i molt més. 17 d'octubre al Local Anna Lluch, Quartell. Entrada gratuïta!" />
+  <meta property="og:title" content="Jornada Enrolats 2026 · Enjogassats" />
+  <meta property="og:description" content="Una jornada de rol, jocs de taula, tallers i molt més. 17 octubre 2026, Local Anna Lluch, Quartell." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:  #1a1a2e;
+      --dark2: #16213e;
+      --orange: #F77F00;
+      --blue:  #2E86AB;
+      --green: #06A77D;
+      --white: #ffffff;
+      --gray-light: #f8f8f8;
+      --text: #333333;
+      --text-muted: #666;
+      --radius: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.10);
+      --shadow-hover: 0 8px 36px rgba(0,0,0,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 70px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .nav-logo img { height: 52px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .btn-nav {
+      background: var(--orange); color: #fff; border: none;
+      padding: 0.5rem 1.2rem; border-radius: 6px;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer;
+      text-decoration: none; transition: background .2s, transform .1s;
+    }
+    .btn-nav:hover { background: #e06e00; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: all .3s; display: block; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 99;
+      background: var(--dark2); flex-direction: column; padding: 1.5rem 2rem; gap: 1rem;
+      border-bottom: 2px solid var(--orange);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; font-size: 1rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .btn-nav { text-align: center; margin-top: 0.5rem; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 110px 2rem 4rem;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.60)), url('hero-enrolats.jpg') center / cover no-repeat;
+      position: relative; overflow: hidden;
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-block; background: var(--orange); color: #fff;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.35rem 1.1rem;
+      border-radius: 99px; margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 900; color: #fff;
+      letter-spacing: -0.02em; line-height: 1;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+      text-transform: uppercase;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.3rem);
+      color: rgba(255,255,255,0.82);
+      font-weight: 400; margin-bottom: 2.8rem;
+    }
+
+    /* Countdown */
+    .countdown { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.8rem; flex-wrap: wrap; }
+    .countdown-box {
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 1rem 1.4rem;
+      min-width: 90px; text-align: center;
+      backdrop-filter: blur(6px);
+    }
+    .countdown-num {
+      display: block; font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; color: var(--orange); line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown-label { display: block; font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; }
+    .countdown-done { font-size: 1.6rem; font-weight: 800; color: var(--orange); }
+
+    /* CTA buttons */
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--orange); color: #fff;
+      padding: 0.9rem 1.8rem; border-radius: 8px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(247,127,0,0.4);
+    }
+    .btn-primary:hover { background: #e06e00; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(247,127,0,0.5); }
+    .btn-secondary {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255,255,255,0.85);
+      padding: 0.9rem 1.8rem; border-radius: 8px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: background .2s, border-color .2s, transform .15s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-2px); }
+
+    /* ── SUMMARY BAR ── */
+    .summary-bar {
+      background: var(--dark); padding: 2.5rem 2rem;
+    }
+    .summary-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; max-width: 1000px; margin: 0 auto;
+      text-align: center;
+    }
+    .summary-item { padding: 1rem; }
+    .summary-icon { font-size: 1.8rem; display: block; margin-bottom: 0.5rem; }
+    .summary-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+    .summary-sub { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+
+    /* ── SECTIONS SHARED ── */
+    section { padding: 5rem 2rem; }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; color: var(--dark);
+      text-align: center; margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.05rem; margin-bottom: 3rem; }
+    .section-divider { width: 60px; height: 4px; background: var(--orange); border-radius: 2px; margin: 0.75rem auto 2.5rem; }
+
+    /* ── ACTIVITY CARDS ── */
+    #activitats { background: var(--gray-light); }
+    .cards-grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .act-card {
+      background: #fff; border-radius: var(--radius);
+      padding: 2rem 1.6rem 1.6rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.06);
+      display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .act-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+    .act-emoji { font-size: 2.8rem; text-align: center; margin-bottom: 1rem; display: block; }
+    .act-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--dark); text-align: center; }
+    .act-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; flex-grow: 1; }
+    .act-footer { margin-top: 1.2rem; }
+    .act-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.28rem 0.75rem; border-radius: 99px; color: #fff;
+    }
+    .badge-interior { background: var(--blue); }
+    .badge-exterior { background: var(--green); }
+    .act-note { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
+
+    /* ── PROGRAMA ── */
+    #programa { background: #fff; }
+    .programa-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2.5rem; max-width: 1000px; margin: 0 auto;
+    }
+    .sessio-header {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 0.45rem 1.1rem; border-radius: 99px; margin-bottom: 2rem;
+    }
+    .sessio-mati { background: var(--blue); }
+    .sessio-vesprada { background: var(--orange); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px;
+      width: 2px; background: rgba(0,0,0,0.1); border-radius: 2px;
+    }
+    .timeline-item { position: relative; margin-bottom: 1.8rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -1.75rem; top: 5px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--orange); border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--orange);
+    }
+    .timeline-time { font-size: 0.78rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+    .timeline-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.3rem; }
+    .timeline-subs { list-style: none; padding: 0; margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.2rem; }
+    .timeline-subs li { font-size: 0.85rem; color: var(--text-muted); padding-left: 0.9rem; position: relative; }
+    .timeline-subs li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+    .timeline-note { font-size: 0.82rem; color: var(--orange); font-weight: 600; margin-top: 0.3rem; }
+
+    .programa-notice {
+      max-width: 1000px; margin: 2.5rem auto 0;
+      background: rgba(247,127,0,0.08); border: 1px solid rgba(247,127,0,0.25);
+      border-radius: var(--radius); padding: 1.3rem 1.8rem;
+      text-align: center; font-size: 0.95rem; color: var(--text);
+      line-height: 1.65;
+    }
+    .programa-notice strong { color: var(--orange); }
+
+    /* ── COL·LABORADORS ── */
+    #collaboradors { background: var(--gray-light); }
+    .collab-row-label { text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.3rem; }
+    .collab-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .collab-row:last-child { margin-bottom: 0; }
+    .collab-card {
+      background: #fff; border-radius: var(--radius);
+      border: 1px solid rgba(0,0,0,0.09);
+      padding: 1.5rem 1.2rem; width: 200px;
+      text-align: center; box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .collab-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .collab-logo {
+      width: 100%; height: 70px; background: #eee;
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; margin-bottom: 0.9rem;
+      font-size: 0.72rem; color: #999; font-weight: 600;
+      text-align: center; padding: 0.3rem; line-height: 1.4;
+    }
+    .collab-name { font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-bottom: 0.2rem; }
+    .collab-type { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── REGISTRE ── */
+    #registre { background: var(--dark); padding: 5rem 2rem; }
+    .registre-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .registre-emoji { font-size: 3.5rem; display: block; margin-bottom: 1.2rem; }
+    .registre-inner h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; color: #fff; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .registre-inner p { font-size: 1.05rem; color: rgba(255,255,255,0.65); margin-bottom: 2.5rem; }
+    .registre-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.8rem; }
+    .registre-box {
+      border: 1.5px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius); padding: 2rem 1.5rem;
+      text-align: center;
+      background: rgba(255,255,255,0.04);
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .registre-box-icon { font-size: 2.2rem; }
+    .registre-box h3 { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .registre-box p { font-size: 0.9rem; color: rgba(255,255,255,0.6); flex-grow: 1; }
+    .btn-reg-primary {
+      display: block; background: var(--orange); color: #fff;
+      padding: 0.8rem 1.2rem; border-radius: 7px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      transition: background .2s, transform .1s;
+    }
+    .btn-reg-primary:hover { background: #e06e00; transform: translateY(-1px); }
+    .btn-reg-outline {
+      display: block; background: transparent; color: #fff;
+      border: 2px solid rgba(255,255,255,0.7);
+      padding: 0.8rem 1.2rem; border-radius: 7px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      transition: background .2s, border-color .2s, transform .1s;
+    }
+    .btn-reg-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-1px); }
+    .registre-contact { font-size: 0.88rem; color: rgba(255,255,255,0.45); }
+    .registre-contact a { color: rgba(255,255,255,0.7); }
+
+    /* ── FAQ ── */
+    #faq { background: #fff; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid rgba(0,0,0,0.09); }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 0; text-align: left;
+      font-size: 1.05rem; font-weight: 600; color: var(--dark);
+      gap: 1rem; transition: color .2s; font-family: inherit;
+    }
+    .faq-question:hover { color: var(--orange); }
+    .faq-icon {
+      flex-shrink: 0; width: 28px; height: 28px;
+      border: 2px solid currentColor; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: transform .3s, background .2s;
+      font-weight: 400;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--orange); border-color: var(--orange); color: #fff; }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .3s;
+      color: var(--text-muted); font-size: 0.97rem; line-height: 1.7;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.3rem; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(255,255,255,0.75); padding: 4rem 2rem 0; }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 3rem; max-width: 1100px; margin: 0 auto;
+      padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo-name { font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .footer-col h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li { font-size: 0.92rem; }
+    .footer-col a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color .2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom { text-align: center; padding: 1.5rem 0; font-size: 0.85rem; color: rgba(255,255,255,0.35); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cards-grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .programa-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .registre-boxes { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 340px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .cards-grid-3 { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 3.5rem 1.2rem; }
+      nav { padding: 0 1.2rem; }
+      .countdown-box { min-width: 70px; padding: 0.75rem 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVIGATION ══ -->
+  <nav aria-label="Navegació principal">
+    <a href="index.html" class="nav-logo" aria-label="Inici Enjogassats">
+      <img src="logo.png" alt="Enjogassats logo" style="height:52px;" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Inici</a>
+      <a href="contacto.html">Contacte</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0pGSr-x8hc6q3uN1LuzxaUficlwFYgV51rSiE8e69Njeolg/viewform?usp=dialog" target="_blank" rel="noopener" class="btn-nav">Fes-te simpatitzant</a>
+    </div>
+    <button class="hamburger" aria-label="Obrir menú" aria-expanded="false" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" role="navigation" aria-label="Menú mòbil">
+    <a href="index.html">Inici</a>
+    <a href="contacto.html">Contacte</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0pGSr-x8hc6q3uN1LuzxaUficlwFYgV51rSiE8e69Njeolg/viewform?usp=dialog" target="_blank" rel="noopener" class="btn-nav">Fes-te simpatitzant</a>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" aria-label="Jornada Enrolats 2026">
+    <div class="hero-inner">
+      <div class="hero-badge">17 Octubre 2026 · Local Anna Lluch</div>
+      <h1>Jornada<br>Enrolats 2026</h1>
+      <p class="hero-subtitle">Una jornada de rol, jocs de taula, tallers i molt més</p>
+
+      <!-- Countdown -->
+      <div class="countdown" id="countdown" aria-label="Compte enrere per a l'esdeveniment">
+        <div class="countdown-box"><span class="countdown-num" id="cd-dies">--</span><span class="countdown-label">Dies</span></div>
+        <div class="countdown-box"><span class="countdown-num" id="cd-hores">--</span><span class="countdown-label">Hores</span></div>
+        <div class="countdown-box"><span class="countdown-num" id="cd-minuts">--</span><span class="countdown-label">Minuts</span></div>
+        <div class="countdown-box"><span class="countdown-num" id="cd-segons">--</span><span class="countdown-label">Segons</span></div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#registre" class="btn-primary">Apunta't a l'esdeveniment</a>
+        <a href="#programa" class="btn-secondary">Veure el programa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SUMMARY BAR ══ -->
+  <div class="summary-bar" role="region" aria-label="Resum de l'esdeveniment">
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-icon" aria-hidden="true">📅</span>
+        <div class="summary-title">17 Octubre 2026</div>
+        <div class="summary-sub">Dissabte</div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon" aria-hidden="true">📍</span>
+        <div class="summary-title">Local Anna Lluch</div>
+        <div class="summary-sub">Quartell, València</div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon" aria-hidden="true">🎲</span>
+        <div class="summary-title">Partides de Rol, Jocs i Tallers</div>
+        <div class="summary-sub">Per a totes les edats</div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon" aria-hidden="true">🎟️</span>
+        <div class="summary-title">Entrada gratuïta</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ QUÈ ET TROBARÀS? ══ -->
+  <section id="activitats" aria-labelledby="title-activitats">
+    <h2 class="section-title" id="title-activitats">Què et trobaràs?</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+    <p class="section-subtitle">Una jornada completa d'activitats per a totes les edats</p>
+
+    <div class="cards-grid-3">
+
+      <article class="act-card">
+        <span class="act-emoji" aria-hidden="true">🐉</span>
+        <h3>Partides de Rol</h3>
+        <p>Submergeix-te en aventures èpiques amb sistemes com Dungeons &amp; Dragons, Call of Cthulhu, Star Wars, Runequest, Conan i molt més. Dirigides per mestres de joc experimentats per a tots els nivells.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-interior">Interior</span>
+          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
+        </div>
+      </article>
+
+      <article class="act-card">
+        <span class="act-emoji" aria-hidden="true">🃏</span>
+        <h3>Joc de Cartes: Vampir la Mascarada</h3>
+        <p>Endinsa't en el món de la foscor amb el clàssic joc de cartes de vampirs. Partides dirigides per a iniciats i veterans.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-interior">Interior</span>
+          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Juvenil / Adult</span>
+        </div>
+      </article>
+
+      <article class="act-card">
+        <span class="act-emoji" aria-hidden="true">🎲</span>
+        <h3>Jocs de Taula i Estratègia</h3>
+        <p>Taules amb jocs de taula moderns per a gaudir en família o amb amics. Des de jocs ràpids fins a títols d'estratègia profunda.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-interior">Interior</span>
+          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
+        </div>
+      </article>
+
+      <article class="act-card">
+        <span class="act-emoji" aria-hidden="true">🎮</span>
+        <h3>Rat Dice — Joc Propi</h3>
+        <p>Descobreix un joc de creació pròpia dirigit pel seu mateix autor. Una experiència única i exclusiva de la jornada.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-interior">Interior</span>
+          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
+        </div>
+      </article>
+
+      <!-- Softcombat removed -->
+      <article class="act-card" style="display:none">
+        <span class="act-emoji" aria-hidden="true">⚔️</span>
+        <h3>Softcombat</h3>
+        <p>Combat medieval amb armes d'escuma en un entorn segur i divertit. Aprèn tècniques bàsiques i posa't a prova en duel amistós. Organitzat per l'Associació Cultural El Arcano.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-exterior">Exterior</span>
+          <span class="act-badge badge-exterior" style="margin-left:0.4rem;">Totes les edats</span>
+          <span class="act-note">* Subjecte a condicions meteorològiques</span>
+        </div>
+      </article>
+
+      <!-- Rol en Viu removed -->
+      <article class="act-card" style="display:none">
+        <span class="act-emoji" aria-hidden="true">🏰</span>
+        <h3>Rol en Viu</h3>
+        <p>Viu una aventura de rol en primera persona. Interpreta el teu personatge, pren decisions i influeix en la història en temps real. Organitzat per l'Associació Cultural El Arcano.</p>
+        <div class="act-footer">
+          <span class="act-badge badge-exterior">Exterior</span>
+          <span class="act-badge badge-exterior" style="margin-left:0.4rem;">Juvenil / Adult</span>
+          <span class="act-note">* Subjecte a condicions meteorològiques</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══ PROGRAMA ══ -->
+  <section id="programa" aria-labelledby="title-programa">
+    <h2 class="section-title" id="title-programa">Programa de la Jornada</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+    <p class="section-subtitle">Organitzat en dos torns per poder gaudir de tot</p>
+
+    <div class="programa-grid">
+
+      <!-- Matí -->
+      <div>
+        <div class="sessio-header sessio-mati">🌅 Sessió de Matí</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Matí — hora per confirmar</div>
+            <div class="timeline-title">Obertura de portes</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Matí</div>
+            <div class="timeline-title">Partides de Rol — Torn Matí</div>
+            <ul class="timeline-subs">
+              <li>D&amp;D (totes les edats)</li>
+              <li>Star Wars Adults</li>
+              <li>Magissa (infantil)</li>
+              <li>Rat Dice (joc propi)</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Matí</div>
+            <div class="timeline-title">Jocs de Taula i Estratègia</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Vesprada -->
+      <div>
+        <div class="sessio-header sessio-vesprada">🌆 Sessió de Vesprada</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Vesprada — hora per confirmar</div>
+            <div class="timeline-title">Inici torn vesprada</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Vesprada</div>
+            <div class="timeline-title">Partides de Rol — Torn Vesprada</div>
+            <ul class="timeline-subs">
+              <li>Star Wars Infantil</li>
+              <li>Conan</li>
+              <li>Jyhad / Vampir la Mascarada</li>
+              <li>Cthulhu</li>
+              <li>Runequest</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-time">Vesprada</div>
+            <div class="timeline-title">Jocs de Taula i Estratègia</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="programa-notice">
+      📢 Els horaris exactes s'anunciaran pròximament.
+      Segueix-nos a Instagram <strong>@enjogassats.associacio</strong> per a no perdre cap novetat!
+    </div>
+  </section>
+
+  <!-- ══ COL·LABORADORS ══ -->
+  <section id="collaboradors" aria-labelledby="title-collab">
+    <h2 class="section-title" id="title-collab">Fan possible la Jornada Enrolats</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+    <p class="section-subtitle">Gràcies a editorials, botigues i associacions col·laboradores</p>
+
+    <div style="max-width:1000px;margin:0 auto;">
+      <div class="collab-row-label">Editorials i Botigues</div>
+      <div class="collab-row">
+        <div class="collab-card">
+          <div class="collab-logo">Logo Shadowlands</div>
+          <div class="collab-name">Shadowlands</div>
+          <div class="collab-type">Material físic</div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-logo">Logo HT Publishers</div>
+          <div class="collab-name">HT Publishers</div>
+          <div class="collab-type">Material físic</div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-logo">Logo Other Silves</div>
+          <div class="collab-name">Other Silves</div>
+          <div class="collab-type">Material digital</div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-logo">Logo Lúdilo</div>
+          <div class="collab-name">Lúdilo — Jocs Educatius</div>
+          <div class="collab-type">Material físic</div>
+        </div>
+      </div>
+
+      <div class="collab-row-label">Associacions Col·laboradores</div>
+      <div class="collab-row">
+        <div class="collab-card">
+          <div class="collab-logo">Logo Rat Dice</div>
+          <div class="collab-name">Rat Dice</div>
+          <div class="collab-type">Joc propi</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ REGISTRE ══ -->
+  <section id="registre" aria-labelledby="title-registre">
+    <div class="registre-inner">
+      <span class="registre-emoji" aria-hidden="true">🎲</span>
+      <h2 id="title-registre">Apunta't a la Jornada Enrolats 2026!</h2>
+      <p>Reserva el teu lloc i assegura't de no quedar-te fora. Les places són limitades!</p>
+
+      <div class="registre-boxes">
+        <div class="registre-box">
+          <div class="registre-box-icon" aria-hidden="true">🎮</div>
+          <h3>Vull jugar</h3>
+          <p>Reserva la teua plaça com a jugador/a en les partides de la jornada</p>
+          <a href="#" class="btn-reg-primary">Registre de jugadors/es</a>
+        </div>
+        <div class="registre-box">
+          <div class="registre-box-icon" aria-hidden="true">🙋</div>
+          <h3>Vull voluntariar</h3>
+          <p>Ajuda a organitzar i fer possible la Jornada Enrolats com a voluntari/a</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-xc8xNEiIwYEJmhr-rDFASIAAsAKNygUG7u6BZJ6hNOY6ng/viewform" target="_blank" rel="noopener" class="btn-reg-outline">Registre de voluntaris/àries</a>
+        </div>
+      </div>
+
+      <p class="registre-contact">Tens dubtes? Escriu-nos a <a href="mailto:enjogassats.trobada@gmail.com">enjogassats.trobada@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section id="faq" aria-labelledby="title-faq">
+    <h2 class="section-title" id="title-faq">Preguntes freqüents</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Cal pagar per assistir a la jornada?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          No, l'assistència a la Jornada Enrolats és completament gratuïta. Alguns materials i premis es podran aconseguir mitjançant rifes i activitats especials durant el dia.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>He d'apuntar-me prèviament o puc presentar-me directament?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          Recomanem apuntar-se prèviament per garantir plaça a les partides, especialment per al rol. Hi pot haver places disponibles per a assistents sense reserva, però no està garantit.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Les activitats exteriors es faran si plou?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          Les activitats de Softcombat i Rol en Viu es realitzen a l'exterior i estan subjectes a les condicions meteorològiques. En cas de pluja, s'avaluarà la situació i s'avisarà pels canals oficials.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Hi ha activitats per a xiquets i xiquetes?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          Sí! Tenim activitats específiques per als més menuts, incloent partides de rol infantil i jocs de taula per a totes les edats. Els menors han de vindre acompanyats d'un adult responsable.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>On es troba el Local Anna Lluch?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          El Local Anna Lluch es troba a Quartell, a la comarca del Camp de Morvedre (València). L'adreça exacta s'anunciarà pròximament per Instagram i WhatsApp.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo-name">ENJOGASSATS</div>
+        <p class="footer-tagline">Associació Lúdica i Cultural de la Vall de Segó</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contacte</h4>
+        <ul>
+          <li><a href="mailto:enjogassats.trobada@gmail.com">📧 enjogassats.trobada@gmail.com</a></li>
+          <li><a href="#whatsapp">📱 Canal de WhatsApp</a></li>
+          <li><a href="https://instagram.com/enjogassats.associacio" target="_blank" rel="noopener">📸 @enjogassats.associacio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Enllaços</h4>
+        <ul>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc0pGSr-x8hc6q3uN1LuzxaUficlwFYgV51rSiE8e69Njeolg/viewform?usp=dialog" target="_blank" rel="noopener">Fes-te simpatitzant</a></li>
+          <li><a href="#registre">Apunta't a la Jornada</a></li>
+          <li><a href="contacto.html">Contacta'ns</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Enjogassats · Associació Lúdica i Cultural de la Vall de Segó
+    </div>
+  </footer>
+
+  <!-- ══ JS ══ -->
+  <script>
+    // ── Mobile menu ──
+    function toggleMenu(btn) {
+      const menu = document.querySelector('.mobile-menu');
+      const isOpen = menu.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+    document.addEventListener('click', function(e) {
+      const menu = document.querySelector('.mobile-menu');
+      const hamburger = document.querySelector('.hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+        menu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ── FAQ accordion ──
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    // ── Countdown ──
+    (function() {
+      // October 17 2026 09:00:00 Spain local (UTC+2 in October, CEST)
+      const target = new Date('2026-10-17T09:00:00+02:00').getTime();
+      const cdDies   = document.getElementById('cd-dies');
+      const cdHores  = document.getElementById('cd-hores');
+      const cdMinuts = document.getElementById('cd-minuts');
+      const cdSegons = document.getElementById('cd-segons');
+      const countdown = document.getElementById('countdown');
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function tick() {
+        const now  = Date.now();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          countdown.innerHTML = '<p class="countdown-done">Avui és el gran dia! 🎲</p>';
+          return;
+        }
+
+        const dies   = Math.floor(diff / 86400000);
+        const hores  = Math.floor((diff % 86400000) / 3600000);
+        const minuts = Math.floor((diff % 3600000)  / 60000);
+        const segons = Math.floor((diff % 60000)    / 1000);
+
+        cdDies.textContent   = dies;
+        cdHores.textContent  = pad(hores);
+        cdMinuts.textContent = pad(minuts);
+        cdSegons.textContent = pad(segons);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // ── Nav scroll effect ──
+    window.addEventListener('scroll', function() {
+      document.querySelector('nav').style.boxShadow =
+        window.scrollY > 20 ? '0 4px 30px rgba(0,0,0,0.4)' : '0 2px 16px rgba(0,0,0,0.3)';
+    });
+  </script>
+
+</body>
+</html>
