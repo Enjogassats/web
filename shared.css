@@ -186,3 +186,31 @@ nav { flex: 1; display: flex; align-items: center; justify-content: flex-end; ga
 .mt-2 { margin-top: 2rem; }
 .mt-3 { margin-top: 3rem; }
 .gap-1 { gap: 1rem; }
+
+/* --- Crònica (enrolats2026.html) --- */
+.cronica-intro { font-size: 1.15rem; color: var(--text); margin-bottom: 1.5rem; }
+.cronica-firma { font-size: .95rem; font-weight: 600; color: var(--orange); margin-bottom: 2rem; }
+.cronica-bloque { padding: 2.5rem 0; border-top: 1px solid var(--border); }
+.cronica-bloque:first-of-type { border-top: none; }
+.cronica-titular {
+  font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 900; line-height: 1.25;
+  text-transform: uppercase; letter-spacing: .01em; color: var(--text);
+  padding-left: 1rem; border-left: 4px solid var(--orange); margin-bottom: 1rem;
+}
+.cronica-bloque p { color: var(--text); font-size: 1.02rem; margin-bottom: 1rem; }
+.cronica-bloque p:last-child { margin-bottom: 0; }
+.cronica-fotos {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem; margin-top: 1.5rem;
+}
+.cronica-fotos img {
+  width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.cronica-fotos--ancha img { aspect-ratio: 16/9; }
+.cronica-fotos img.cronica-foto--arriba { object-position: center 30%; }
+.cronica-cierre {
+  margin-top: 1rem; padding: 1.5rem 1.8rem; border-radius: var(--radius);
+  background: var(--orange-l); border: 1px solid rgba(247,127,0,.25);
+  text-align: center; font-size: 1.3rem; font-weight: 800; color: var(--orange);
+}
