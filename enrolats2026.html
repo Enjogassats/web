@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jornada Enrolats 2026 · Enjogassats</title>
-  <meta name="description" content="Jornada Enrolats 2026: una jornada de rol, jocs de taula, tallers i molt més. 17 d'octubre al Local Anna Lluch, Quartell. Entrada gratuïta!" />
-  <meta property="og:title" content="Jornada Enrolats 2026 · Enjogassats" />
-  <meta property="og:description" content="Una jornada de rol, jocs de taula, tallers i molt més. 17 octubre 2026, Local Anna Lluch, Quartell." />
-  <meta property="og:type" content="website" />
+  <title>Crònica de l'Enrolats 2026 · Enjogassats</title>
+  <meta name="description" content="Crònica personal de la Jornada Enrolats 2026, celebrada el 17 d'octubre al Local Anna Lluch de Quartell: partides de rol, tallers, subhasta i molt més." />
+  <meta property="og:title" content="Crònica de l'Enrolats 2026 · Enjogassats" />
+  <meta property="og:description" content="Els daus ja han parlat. Així va ser la Jornada Enrolats 2026 al Local Anna Lluch de Quartell." />
+  <meta property="og:type" content="article" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,6 +34,13 @@
 
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); }
+
+    /* ── Compatibilitat amb shared.css (carregat abans) ── */
+    h1, h2, h3, h4 { font-family: inherit; }
+    .mobile-menu { bottom: auto; }
+    .btn-secondary:hover { box-shadow: none; }
+    .footer-tagline { opacity: 1; margin-bottom: 0; }
+    .footer-bottom { display: block; border-top: none; opacity: 1; }
 
     /* ── NAV ── */
     nav {
@@ -70,7 +78,7 @@
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
+      min-height: 70vh;
       display: flex; align-items: center; justify-content: center;
       text-align: center;
       padding: 110px 2rem 4rem;
@@ -99,22 +107,6 @@
       font-weight: 400; margin-bottom: 2.8rem;
     }
 
-    /* Countdown */
-    .countdown { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.8rem; flex-wrap: wrap; }
-    .countdown-box {
-      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px; padding: 1rem 1.4rem;
-      min-width: 90px; text-align: center;
-      backdrop-filter: blur(6px);
-    }
-    .countdown-num {
-      display: block; font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 900; color: var(--orange); line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-    .countdown-label { display: block; font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; }
-    .countdown-done { font-size: 1.6rem; font-weight: 800; color: var(--orange); }
-
     /* CTA buttons */
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn-primary {
@@ -134,20 +126,6 @@
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-2px); }
 
-    /* ── SUMMARY BAR ── */
-    .summary-bar {
-      background: var(--dark); padding: 2.5rem 2rem;
-    }
-    .summary-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1rem; max-width: 1000px; margin: 0 auto;
-      text-align: center;
-    }
-    .summary-item { padding: 1rem; }
-    .summary-icon { font-size: 1.8rem; display: block; margin-bottom: 0.5rem; }
-    .summary-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
-    .summary-sub { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
-
     /* ── SECTIONS SHARED ── */
     section { padding: 5rem 2rem; }
     .section-title {
@@ -159,76 +137,8 @@
     .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.05rem; margin-bottom: 3rem; }
     .section-divider { width: 60px; height: 4px; background: var(--orange); border-radius: 2px; margin: 0.75rem auto 2.5rem; }
 
-    /* ── ACTIVITY CARDS ── */
-    #activitats { background: var(--gray-light); }
-    .cards-grid-3 {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
-    }
-    .act-card {
-      background: #fff; border-radius: var(--radius);
-      padding: 2rem 1.6rem 1.6rem;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(0,0,0,0.06);
-      display: flex; flex-direction: column;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .act-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-    .act-emoji { font-size: 2.8rem; text-align: center; margin-bottom: 1rem; display: block; }
-    .act-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--dark); text-align: center; }
-    .act-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; flex-grow: 1; }
-    .act-footer { margin-top: 1.2rem; }
-    .act-badge {
-      display: inline-block; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.07em; text-transform: uppercase;
-      padding: 0.28rem 0.75rem; border-radius: 99px; color: #fff;
-    }
-    .badge-interior { background: var(--blue); }
-    .badge-exterior { background: var(--green); }
-    .act-note { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
-
-    /* ── PROGRAMA ── */
-    #programa { background: #fff; }
-    .programa-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 2.5rem; max-width: 1000px; margin: 0 auto;
-    }
-    .sessio-header {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 1rem; font-weight: 700; color: #fff;
-      padding: 0.45rem 1.1rem; border-radius: 99px; margin-bottom: 2rem;
-    }
-    .sessio-mati { background: var(--blue); }
-    .sessio-vesprada { background: var(--orange); }
-
-    .timeline { position: relative; padding-left: 2rem; }
-    .timeline::before {
-      content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px;
-      width: 2px; background: rgba(0,0,0,0.1); border-radius: 2px;
-    }
-    .timeline-item { position: relative; margin-bottom: 1.8rem; }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-dot {
-      position: absolute; left: -1.75rem; top: 5px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--orange); border: 2px solid #fff;
-      box-shadow: 0 0 0 2px var(--orange);
-    }
-    .timeline-time { font-size: 0.78rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
-    .timeline-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.3rem; }
-    .timeline-subs { list-style: none; padding: 0; margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.2rem; }
-    .timeline-subs li { font-size: 0.85rem; color: var(--text-muted); padding-left: 0.9rem; position: relative; }
-    .timeline-subs li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
-    .timeline-note { font-size: 0.82rem; color: var(--orange); font-weight: 600; margin-top: 0.3rem; }
-
-    .programa-notice {
-      max-width: 1000px; margin: 2.5rem auto 0;
-      background: rgba(247,127,0,0.08); border: 1px solid rgba(247,127,0,0.25);
-      border-radius: var(--radius); padding: 1.3rem 1.8rem;
-      text-align: center; font-size: 0.95rem; color: var(--text);
-      line-height: 1.65;
-    }
-    .programa-notice strong { color: var(--orange); }
+    /* ── CRÒNICA ── */
+    #cronica { background: #fff; }
 
     /* ── COL·LABORADORS ── */
     #collaboradors { background: var(--gray-light); }
@@ -243,77 +153,15 @@
       transition: transform .2s, box-shadow .2s;
     }
     .collab-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
-    .collab-logo {
-      width: 100%; height: 70px; background: #eee;
-      border-radius: 6px; display: flex; align-items: center;
-      justify-content: center; margin-bottom: 0.9rem;
-      font-size: 0.72rem; color: #999; font-weight: 600;
-      text-align: center; padding: 0.3rem; line-height: 1.4;
-    }
     .collab-name { font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-bottom: 0.2rem; }
     .collab-type { font-size: 0.78rem; color: var(--text-muted); }
 
-    /* ── REGISTRE ── */
-    #registre { background: var(--dark); padding: 5rem 2rem; }
+    /* ── SEGUEIX-NOS ── */
+    #segueix { background: var(--dark); padding: 5rem 2rem; }
     .registre-inner { max-width: 700px; margin: 0 auto; text-align: center; }
     .registre-emoji { font-size: 3.5rem; display: block; margin-bottom: 1.2rem; }
     .registre-inner h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; color: #fff; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
     .registre-inner p { font-size: 1.05rem; color: rgba(255,255,255,0.65); margin-bottom: 2.5rem; }
-    .registre-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.8rem; }
-    .registre-box {
-      border: 1.5px solid rgba(255,255,255,0.18);
-      border-radius: var(--radius); padding: 2rem 1.5rem;
-      text-align: center;
-      background: rgba(255,255,255,0.04);
-      display: flex; flex-direction: column; gap: 0.8rem;
-    }
-    .registre-box-icon { font-size: 2.2rem; }
-    .registre-box h3 { font-size: 1.15rem; font-weight: 700; color: #fff; }
-    .registre-box p { font-size: 0.9rem; color: rgba(255,255,255,0.6); flex-grow: 1; }
-    .btn-reg-primary {
-      display: block; background: var(--orange); color: #fff;
-      padding: 0.8rem 1.2rem; border-radius: 7px;
-      font-weight: 700; font-size: 0.95rem; text-decoration: none;
-      transition: background .2s, transform .1s;
-    }
-    .btn-reg-primary:hover { background: #e06e00; transform: translateY(-1px); }
-    .btn-reg-outline {
-      display: block; background: transparent; color: #fff;
-      border: 2px solid rgba(255,255,255,0.7);
-      padding: 0.8rem 1.2rem; border-radius: 7px;
-      font-weight: 700; font-size: 0.95rem; text-decoration: none;
-      transition: background .2s, border-color .2s, transform .1s;
-    }
-    .btn-reg-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-1px); }
-    .registre-contact { font-size: 0.88rem; color: rgba(255,255,255,0.45); }
-    .registre-contact a { color: rgba(255,255,255,0.7); }
-
-    /* ── FAQ ── */
-    #faq { background: #fff; }
-    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; }
-    .faq-item { border-bottom: 1px solid rgba(0,0,0,0.09); }
-    .faq-question {
-      width: 100%; background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.3rem 0; text-align: left;
-      font-size: 1.05rem; font-weight: 600; color: var(--dark);
-      gap: 1rem; transition: color .2s; font-family: inherit;
-    }
-    .faq-question:hover { color: var(--orange); }
-    .faq-icon {
-      flex-shrink: 0; width: 28px; height: 28px;
-      border: 2px solid currentColor; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; transition: transform .3s, background .2s;
-      font-weight: 400;
-    }
-    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--orange); border-color: var(--orange); color: #fff; }
-    .faq-answer {
-      max-height: 0; overflow: hidden;
-      transition: max-height .35s ease, padding .3s;
-      color: var(--text-muted); font-size: 0.97rem; line-height: 1.7;
-    }
-    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.3rem; }
 
     /* ── FOOTER ── */
     footer { background: var(--dark); color: rgba(255,255,255,0.75); padding: 4rem 2rem 0; }
@@ -332,25 +180,16 @@
     .footer-bottom { text-align: center; padding: 1.5rem 0; font-size: 0.85rem; color: rgba(255,255,255,0.35); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .cards-grid-3 { grid-template-columns: repeat(2, 1fr); }
-      .summary-grid { grid-template-columns: repeat(2, 1fr); }
-      .programa-grid { grid-template-columns: 1fr; }
-    }
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .registre-boxes { grid-template-columns: 1fr; }
       .hero-ctas { flex-direction: column; align-items: center; }
       .btn-primary, .btn-secondary { width: 100%; max-width: 340px; text-align: center; }
     }
     @media (max-width: 600px) {
-      .cards-grid-3 { grid-template-columns: 1fr; }
-      .summary-grid { grid-template-columns: 1fr 1fr; }
       section { padding: 3.5rem 1.2rem; }
       nav { padding: 0 1.2rem; }
-      .countdown-box { min-width: 70px; padding: 0.75rem 0.9rem; }
     }
   </style>
 </head>
@@ -359,7 +198,7 @@
   <!-- ══ NAVIGATION ══ -->
   <nav aria-label="Navegació principal">
     <a href="index.html" class="nav-logo" aria-label="Inici Enjogassats">
-      <img src="logo.png" alt="Enjogassats logo" style="height:52px;" />
+      <img src="logo.png" alt="Enjogassats logo" />
     </a>
     <div class="nav-links">
       <a href="index.html">Inici</a>
@@ -377,234 +216,137 @@
   </div>
 
   <!-- ══ HERO ══ -->
-  <section class="hero" aria-label="Jornada Enrolats 2026">
+  <section class="hero" aria-label="Crònica de la Jornada Enrolats 2026">
     <div class="hero-inner">
-      <div class="hero-badge">17 Octubre 2026 · Local Anna Lluch</div>
-      <h1>Jornada<br>Enrolats 2026</h1>
-      <p class="hero-subtitle">Una jornada de rol, jocs de taula, tallers i molt més</p>
-
-      <!-- Countdown -->
-      <div class="countdown" id="countdown" aria-label="Compte enrere per a l'esdeveniment">
-        <div class="countdown-box"><span class="countdown-num" id="cd-dies">--</span><span class="countdown-label">Dies</span></div>
-        <div class="countdown-box"><span class="countdown-num" id="cd-hores">--</span><span class="countdown-label">Hores</span></div>
-        <div class="countdown-box"><span class="countdown-num" id="cd-minuts">--</span><span class="countdown-label">Minuts</span></div>
-        <div class="countdown-box"><span class="countdown-num" id="cd-segons">--</span><span class="countdown-label">Segons</span></div>
-      </div>
+      <div class="hero-badge">Dissabte 17 d'octubre 2026 · Local Anna Lluch, Quartell</div>
+      <h1>Crònica<br>Enrolats 2026</h1>
+      <p class="hero-subtitle">Els daus ja han parlat. Descobreix com va ser la jornada</p>
 
       <div class="hero-ctas">
-        <a href="#registre" class="btn-primary">Apunta't a l'esdeveniment</a>
-        <a href="#programa" class="btn-secondary">Veure el programa</a>
+        <a href="#cronica" class="btn-primary">Llig la crònica</a>
+        <a href="#segueix" class="btn-secondary">Segueix-nos</a>
       </div>
     </div>
   </section>
 
-  <!-- ══ SUMMARY BAR ══ -->
-  <div class="summary-bar" role="region" aria-label="Resum de l'esdeveniment">
-    <div class="summary-grid">
-      <div class="summary-item">
-        <span class="summary-icon" aria-hidden="true">📅</span>
-        <div class="summary-title">17 Octubre 2026</div>
-        <div class="summary-sub">Dissabte</div>
-      </div>
-      <div class="summary-item">
-        <span class="summary-icon" aria-hidden="true">📍</span>
-        <div class="summary-title">Local Anna Lluch</div>
-        <div class="summary-sub">Quartell, València</div>
-      </div>
-      <div class="summary-item">
-        <span class="summary-icon" aria-hidden="true">🎲</span>
-        <div class="summary-title">Partides de Rol, Jocs i Tallers</div>
-        <div class="summary-sub">Per a totes les edats</div>
-      </div>
-      <div class="summary-item">
-        <span class="summary-icon" aria-hidden="true">🎟️</span>
-        <div class="summary-title">Entrada gratuïta</div>
-      </div>
-    </div>
-  </div>
+  <!-- ══ CRÒNICA ══ -->
+  <section id="cronica" aria-labelledby="title-cronica">
+    <div class="section-narrow">
+      <h2 class="section-title" id="title-cronica">Crònica personal de l'Enrolats 2026</h2>
+      <div class="section-divider" aria-hidden="true"></div>
 
-  <!-- ══ QUÈ ET TROBARÀS? ══ -->
-  <section id="activitats" aria-labelledby="title-activitats">
-    <h2 class="section-title" id="title-activitats">Què et trobaràs?</h2>
-    <div class="section-divider" aria-hidden="true"></div>
-    <p class="section-subtitle">Una jornada completa d'activitats per a totes les edats</p>
+      <p class="cronica-intro">Podria intentar fer una crònica cronològica del dia, però vos contaré el que jo vaig viure, a mode de titulars.</p>
+      <p class="cronica-firma">✍️ Per Alberto</p>
 
-    <div class="cards-grid-3">
+      <figure class="cronica-fotos cronica-fotos--ancha">
+        <img src="cronica-ambiente.jpg" width="1600" height="900" loading="lazy" alt="Vista general del local durant la jornada, amb diverses taules de joc plenes de gent" />
+      </figure>
 
-      <article class="act-card">
-        <span class="act-emoji" aria-hidden="true">🐉</span>
-        <h3>Partides de Rol</h3>
-        <p>Submergeix-te en aventures èpiques amb sistemes com Dungeons &amp; Dragons, Call of Cthulhu, Star Wars, Runequest, Conan i molt més. Dirigides per mestres de joc experimentats per a tots els nivells.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-interior">Interior</span>
-          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Un llarg viatge per Glorantha</h3>
+        <p>Van començar a jugar a RuneQuest abans de les onze del matí i van deixar de jugar (que no van acabar) passades les set i mitja de la vesprada.</p>
+        <figure class="cronica-fotos">
+          <img src="cronica-grupo.jpg" width="1600" height="719" loading="lazy" alt="Jugadors i jugadores al voltant de la taula de RuneQuest, amb la pantalla del màster i un portàtil" />
+          <img src="cronica-runequest.jpg" width="1600" height="719" loading="lazy" alt="Fitxes de personatge de RuneQuest escampades sobre el tapet verd" />
+        </figure>
       </article>
 
-      <article class="act-card">
-        <span class="act-emoji" aria-hidden="true">🃏</span>
-        <h3>Joc de Cartes: Vampir la Mascarada</h3>
-        <p>Endinsa't en el món de la foscor amb el clàssic joc de cartes de vampirs. Partides dirigides per a iniciats i veterans.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-interior">Interior</span>
-          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Juvenil / Adult</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">La taula de D&amp;D va necessitar ampliar fronteres</h3>
+        <p>Vam haver de posar una taula doble, perquè el nostre company Alberto va fer un desplegament de mapes tan increïble que no cabia en una sola taula. També va ser tot un èxit.</p>
+        <figure class="cronica-fotos">
+          <img src="cronica-dnd-mesa.jpg" width="1600" height="719" loading="lazy" alt="Taula doble de D&amp;D amb un gran mapa, miniatures, una tauleta i fitxes de personatge" />
+          <img src="cronica-dnd-miniaturas.jpg" width="900" height="1600" loading="lazy" alt="Detall del mapa quadriculat de D&amp;D amb miniatures d'esquelets i aventurers i daus de colors" />
+        </figure>
       </article>
 
-      <article class="act-card">
-        <span class="act-emoji" aria-hidden="true">🎲</span>
-        <h3>Jocs de Taula i Estratègia</h3>
-        <p>Taules amb jocs de taula moderns per a gaudir en família o amb amics. Des de jocs ràpids fins a títols d'estratègia profunda.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-interior">Interior</span>
-          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Magissa va trencar el gel amb els més menuts</h3>
+        <p>El nostre company David va ser el primer a reunir una taula infantil i, segons ens van contar, en van eixir encantats.</p>
       </article>
 
-      <article class="act-card">
-        <span class="act-emoji" aria-hidden="true">🎮</span>
-        <h3>Rat Dice — Joc Propi</h3>
-        <p>Descobreix un joc de creació pròpia dirigit pel seu mateix autor. Una experiència única i exclusiva de la jornada.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-interior">Interior</span>
-          <span class="act-badge badge-interior" style="margin-left:0.4rem;">Totes les edats</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Star Wars no va brillar com es mereixia</h3>
+        <p>La nostra companya María va preparar una aventura molt xula de xicotets Jedis, però va coincidir en una franja horària amb poca afluència. Haurem de tornar-la a jugar. Per cert, María va regalar unes bossetes de daus xulíssimes, un gran gest per part seua.</p>
+        <figure class="cronica-fotos cronica-fotos--ancha">
+          <img class="cronica-foto--arriba" src="cronica-star-wars.jpg" width="900" height="1600" loading="lazy" alt="Partida de Star Wars amb la pantalla de la màster il·lustrada amb un AT-AT i l'Estrella de la Mort" />
+        </figure>
       </article>
 
-      <!-- Softcombat removed -->
-      <article class="act-card" style="display:none">
-        <span class="act-emoji" aria-hidden="true">⚔️</span>
-        <h3>Softcombat</h3>
-        <p>Combat medieval amb armes d'escuma en un entorn segur i divertit. Aprèn tècniques bàsiques i posa't a prova en duel amistós. Organitzat per l'Associació Cultural El Arcano.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-exterior">Exterior</span>
-          <span class="act-badge badge-exterior" style="margin-left:0.4rem;">Totes les edats</span>
-          <span class="act-note">* Subjecte a condicions meteorològiques</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Conan no ens va descobrir el secret de l'acer</h3>
+        <p>Per desgràcia, va ser una de les partides que es va quedar sense jugar. Com a bons cimmeris, haurem de fer alguna cosa al respecte prompte.</p>
       </article>
 
-      <!-- Rol en Viu removed -->
-      <article class="act-card" style="display:none">
-        <span class="act-emoji" aria-hidden="true">🏰</span>
-        <h3>Rol en Viu</h3>
-        <p>Viu una aventura de rol en primera persona. Interpreta el teu personatge, pren decisions i influeix en la història en temps real. Organitzat per l'Associació Cultural El Arcano.</p>
-        <div class="act-footer">
-          <span class="act-badge badge-exterior">Exterior</span>
-          <span class="act-badge badge-exterior" style="margin-left:0.4rem;">Juvenil / Adult</span>
-          <span class="act-note">* Subjecte a condicions meteorològiques</span>
-        </div>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Sapito va conquerir la Terra Mitjana</h3>
+        <p>El nostre company Agus va preparar una aventura infantil amb un xicotet orc perdut que va agradar molt als més menuts. En canvi, la seua partida d'El Senyor dels Anells per a majors es va quedar sense jugar.</p>
       </article>
 
-    </div>
-  </section>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Taller d'il·lustració i prototips</h3>
+        <p>El nostre company Adolfo va fer un taller d'il·lustració per als menuts i, per la vesprada, ens va mostrar un prototip d'un joc de terror que té molt bona pinta.</p>
+        <figure class="cronica-fotos cronica-fotos--ancha">
+          <img src="cronica-taller-ilustracion.jpg" width="1600" height="900" loading="lazy" alt="Dibuixos de colors, retoladors i llapis escampats sobre la taula del taller d'il·lustració infantil" />
+        </figure>
+      </article>
 
-  <!-- ══ PROGRAMA ══ -->
-  <section id="programa" aria-labelledby="title-programa">
-    <h2 class="section-title" id="title-programa">Programa de la Jornada</h2>
-    <div class="section-divider" aria-hidden="true"></div>
-    <p class="section-subtitle">Organitzat en dos torns per poder gaudir de tot</p>
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Ysystem Kids va començar com a Ysystem Teenagers</h3>
+        <p>Al poc d'obrir les portes vam veure entrar un grup de set jovenets de 17 anys, casc de la moto en mà, que van entrar decidits fins al fons del local i es van asseure sense pensar-s'ho a la meua taula (preparada per a xiquets).</p>
+        <p>No sabien de què anava la jornada, mai havien sentit parlar del rol, però volien jugar. Així que res, vaig adaptar un poc l'aventura i vam començar a jugar. Vos assegure que va ser el començament de partida més difícil de la meua vida. Els vaig explicar què és el rol, les regles d'Ysystem i vam començar.</p>
+        <p>Un parell d'ells estaven més pendents d'unes xiques de la seua edat que estaven per allí, però tres d'ells es van ficar en la partida a l'instant. Al poc estaven llançant encanteris, destruint elementals de gel amb una espasa flamígera i baixant a les profunditats d'unes criptes.</p>
+        <p>Van celebrar diverses tirades de daus com si haguera sigut un gol de la selecció en la final i se'n van anar molt contents.</p>
+        <p>Durant el dia vaig tornar a jugar altres partides amb eixes fitxes diverses vegades, amb xiquets i pares. L'experiència va ser molt bona.</p>
+        <figure class="cronica-fotos">
+          <img src="cronica-ysystem.jpg" width="1600" height="900" loading="lazy" alt="Grup de jóvens concentrats en la partida d'Ysystem, amb el màster de peu al costat de la pantalla" />
+          <img src="cronica-ysystem-mesa.jpg" width="720" height="1600" loading="lazy" alt="Taula d'Ysystem Kids preparada abans de començar, amb fitxes plastificades, daus i safates de colors" />
+          <img src="cronica-mesa-infantil.jpg" width="1600" height="900" loading="lazy" alt="Partida infantil d'Ysystem Kids amb diversos xiquets i xiquetes alçant la mà" />
+          <img src="cronica-mesa-infantil-detalle.jpg" width="1600" height="900" loading="lazy" alt="Detall de la taula infantil: fitxes de personatge, daus de colors i la pantalla del màster" />
+        </figure>
+      </article>
 
-    <div class="programa-grid">
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Una subhasta a la baixa per tot lo alt</h3>
+        <p>La gent que va acudir es va anar animant a poc a poc i, al final del dia, quan vam fer el sorteig, vam aconseguir uns 35 €, molt més del que jo esperava. A més, el sorteig el va guanyar el nostre company Josele, així que tot queda a casa.</p>
+        <figure class="cronica-fotos cronica-fotos--ancha">
+          <img src="cronica-subasta.jpg" width="1600" height="719" loading="lazy" alt="Caixa de la subhasta a la baixa de l'Enrolats amb els llibres de rol del sorteig" />
+        </figure>
+      </article>
 
-      <!-- Matí -->
-      <div>
-        <div class="sessio-header sessio-mati">🌅 Sessió de Matí</div>
-        <div class="timeline">
+      <article class="cronica-bloque">
+        <h3 class="cronica-titular">Un èxit de jornada</h3>
+        <p>Estic molt content i agraït. Hem creat un grup molt xulo, ple d'entusiasme i d'il·lusió.</p>
+        <p>La gent del poble va respondre. És un poble xicotet i és difícil que un esdeveniment tan específic com este atraga públic. Potser la nostra experiència amb les edicions de l'Enjogassats, les nostres jornades de jocs de taula, ens precedia.</p>
+        <p>En resum, que m'enrotlle: estic molt content, agraït i il·lusionat pel que hem fet i, sobretot, pel que queda per fer.</p>
+      </article>
 
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Matí — hora per confirmar</div>
-            <div class="timeline-title">Obertura de portes</div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Matí</div>
-            <div class="timeline-title">Partides de Rol — Torn Matí</div>
-            <ul class="timeline-subs">
-              <li>D&amp;D (totes les edats)</li>
-              <li>Star Wars Adults</li>
-              <li>Magissa (infantil)</li>
-              <li>Rat Dice (joc propi)</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Matí</div>
-            <div class="timeline-title">Jocs de Taula i Estratègia</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Vesprada -->
-      <div>
-        <div class="sessio-header sessio-vesprada">🌆 Sessió de Vesprada</div>
-        <div class="timeline">
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Vesprada — hora per confirmar</div>
-            <div class="timeline-title">Inici torn vesprada</div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Vesprada</div>
-            <div class="timeline-title">Partides de Rol — Torn Vesprada</div>
-            <ul class="timeline-subs">
-              <li>Star Wars Infantil</li>
-              <li>Conan</li>
-              <li>Jyhad / Vampir la Mascarada</li>
-              <li>Cthulhu</li>
-              <li>Runequest</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-time">Vesprada</div>
-            <div class="timeline-title">Jocs de Taula i Estratègia</div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="programa-notice">
-      📢 Els horaris exactes s'anunciaran pròximament.
-      Segueix-nos a Instagram <strong>@enjogassats.associacio</strong> per a no perdre cap novetat!
+      <p class="cronica-cierre">Gràcies a tots pel vostre suport!</p>
     </div>
   </section>
 
   <!-- ══ COL·LABORADORS ══ -->
   <section id="collaboradors" aria-labelledby="title-collab">
-    <h2 class="section-title" id="title-collab">Fan possible la Jornada Enrolats</h2>
+    <h2 class="section-title" id="title-collab">Gràcies a qui ho va fer possible</h2>
     <div class="section-divider" aria-hidden="true"></div>
-    <p class="section-subtitle">Gràcies a editorials, botigues i associacions col·laboradores</p>
+    <p class="section-subtitle">Editorials, botigues i associacions que van col·laborar amb la Jornada Enrolats</p>
 
-    <div style="max-width:1000px;margin:0 auto;">
+    <div class="section-inner">
       <div class="collab-row-label">Editorials i Botigues</div>
       <div class="collab-row">
         <div class="collab-card">
-          <div class="collab-logo">Logo Shadowlands</div>
           <div class="collab-name">Shadowlands</div>
           <div class="collab-type">Material físic</div>
         </div>
         <div class="collab-card">
-          <div class="collab-logo">Logo HT Publishers</div>
           <div class="collab-name">HT Publishers</div>
           <div class="collab-type">Material físic</div>
         </div>
         <div class="collab-card">
-          <div class="collab-logo">Logo Other Silves</div>
           <div class="collab-name">Other Silves</div>
           <div class="collab-type">Material digital</div>
         </div>
         <div class="collab-card">
-          <div class="collab-logo">Logo Lúdilo</div>
           <div class="collab-name">Lúdilo — Jocs Educatius</div>
           <div class="collab-type">Material físic</div>
         </div>
@@ -613,98 +355,23 @@
       <div class="collab-row-label">Associacions Col·laboradores</div>
       <div class="collab-row">
         <div class="collab-card">
-          <div class="collab-logo">Logo Rat Dice</div>
           <div class="collab-name">Rat Dice</div>
           <div class="collab-type">Joc propi</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ══ REGISTRE ══ -->
-  <section id="registre" aria-labelledby="title-registre">
+  <!-- ══ SEGUEIX-NOS ══ -->
+  <section id="segueix" aria-labelledby="title-segueix">
     <div class="registre-inner">
       <span class="registre-emoji" aria-hidden="true">🎲</span>
-      <h2 id="title-registre">Apunta't a la Jornada Enrolats 2026!</h2>
-      <p>Reserva el teu lloc i assegura't de no quedar-te fora. Les places són limitades!</p>
-
-      <div class="registre-boxes">
-        <div class="registre-box">
-          <div class="registre-box-icon" aria-hidden="true">🎮</div>
-          <h3>Vull jugar</h3>
-          <p>Reserva la teua plaça com a jugador/a en les partides de la jornada</p>
-          <a href="#" class="btn-reg-primary">Registre de jugadors/es</a>
-        </div>
-        <div class="registre-box">
-          <div class="registre-box-icon" aria-hidden="true">🙋</div>
-          <h3>Vull voluntariar</h3>
-          <p>Ajuda a organitzar i fer possible la Jornada Enrolats com a voluntari/a</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-xc8xNEiIwYEJmhr-rDFASIAAsAKNygUG7u6BZJ6hNOY6ng/viewform" target="_blank" rel="noopener" class="btn-reg-outline">Registre de voluntaris/àries</a>
-        </div>
+      <h2 id="title-segueix">Segueix Enjogassats</h2>
+      <p>Assabenta't de les pròximes jornades a Instagram o fes-te simpatitzant de l'associació.</p>
+      <div class="hero-ctas">
+        <a href="https://instagram.com/enjogassats.associacio" target="_blank" rel="noopener" class="btn-primary">📸 @enjogassats.associacio</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0pGSr-x8hc6q3uN1LuzxaUficlwFYgV51rSiE8e69Njeolg/viewform?usp=dialog" target="_blank" rel="noopener" class="btn-secondary">Fes-te simpatitzant</a>
       </div>
-
-      <p class="registre-contact">Tens dubtes? Escriu-nos a <a href="mailto:enjogassats.trobada@gmail.com">enjogassats.trobada@gmail.com</a></p>
-    </div>
-  </section>
-
-  <!-- ══ FAQ ══ -->
-  <section id="faq" aria-labelledby="title-faq">
-    <h2 class="section-title" id="title-faq">Preguntes freqüents</h2>
-    <div class="section-divider" aria-hidden="true"></div>
-
-    <div class="faq-list" role="list">
-
-      <div class="faq-item" role="listitem">
-        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>Cal pagar per assistir a la jornada?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          No, l'assistència a la Jornada Enrolats és completament gratuïta. Alguns materials i premis es podran aconseguir mitjançant rifes i activitats especials durant el dia.
-        </div>
-      </div>
-
-      <div class="faq-item" role="listitem">
-        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>He d'apuntar-me prèviament o puc presentar-me directament?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          Recomanem apuntar-se prèviament per garantir plaça a les partides, especialment per al rol. Hi pot haver places disponibles per a assistents sense reserva, però no està garantit.
-        </div>
-      </div>
-
-      <div class="faq-item" role="listitem">
-        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>Les activitats exteriors es faran si plou?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          Les activitats de Softcombat i Rol en Viu es realitzen a l'exterior i estan subjectes a les condicions meteorològiques. En cas de pluja, s'avaluarà la situació i s'avisarà pels canals oficials.
-        </div>
-      </div>
-
-      <div class="faq-item" role="listitem">
-        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>Hi ha activitats per a xiquets i xiquetes?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          Sí! Tenim activitats específiques per als més menuts, incloent partides de rol infantil i jocs de taula per a totes les edats. Els menors han de vindre acompanyats d'un adult responsable.
-        </div>
-      </div>
-
-      <div class="faq-item" role="listitem">
-        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>On es troba el Local Anna Lluch?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          El Local Anna Lluch es troba a Quartell, a la comarca del Camp de Morvedre (València). L'adreça exacta s'anunciarà pròximament per Instagram i WhatsApp.
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -727,7 +394,7 @@
         <h4>Enllaços</h4>
         <ul>
           <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc0pGSr-x8hc6q3uN1LuzxaUficlwFYgV51rSiE8e69Njeolg/viewform?usp=dialog" target="_blank" rel="noopener">Fes-te simpatitzant</a></li>
-          <li><a href="#registre">Apunta't a la Jornada</a></li>
+          <li><a href="index.html">Inici</a></li>
           <li><a href="contacto.html">Contacta'ns</a></li>
         </ul>
       </div>
@@ -755,49 +422,6 @@
         hamburger.setAttribute('aria-expanded', 'false');
       }
     });
-
-    // ── FAQ accordion ──
-    function toggleFaq(btn) {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', isOpen);
-    }
-
-    // ── Countdown ──
-    (function() {
-      // October 17 2026 09:00:00 Spain local (UTC+2 in October, CEST)
-      const target = new Date('2026-10-17T09:00:00+02:00').getTime();
-      const cdDies   = document.getElementById('cd-dies');
-      const cdHores  = document.getElementById('cd-hores');
-      const cdMinuts = document.getElementById('cd-minuts');
-      const cdSegons = document.getElementById('cd-segons');
-      const countdown = document.getElementById('countdown');
-
-      function pad(n) { return String(n).padStart(2, '0'); }
-
-      function tick() {
-        const now  = Date.now();
-        const diff = target - now;
-
-        if (diff <= 0) {
-          countdown.innerHTML = '<p class="countdown-done">Avui és el gran dia! 🎲</p>';
-          return;
-        }
-
-        const dies   = Math.floor(diff / 86400000);
-        const hores  = Math.floor((diff % 86400000) / 3600000);
-        const minuts = Math.floor((diff % 3600000)  / 60000);
-        const segons = Math.floor((diff % 60000)    / 1000);
-
-        cdDies.textContent   = dies;
-        cdHores.textContent  = pad(hores);
-        cdMinuts.textContent = pad(minuts);
-        cdSegons.textContent = pad(segons);
-      }
-
-      tick();
-      setInterval(tick, 1000);
-    })();
 
     // ── Nav scroll effect ──
     window.addEventListener('scroll', function() {
