@@ -229,35 +229,6 @@
     .evt-divider-line.right { --dir: left; }
     .evt-divider-dice { font-size: 1.4rem; padding: 0 1rem; }
 
-    /* Countdown */
-    .evt-countdown {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; flex-wrap: wrap;
-    }
-    .evt-cd-box {
-      background: rgba(247,127,0,0.1);
-      border: 1px solid rgba(247,127,0,0.3);
-      border-radius: 12px;
-      width: 110px; padding: 20px 16px;
-      text-align: center;
-      box-shadow: inset 0 1px 0 rgba(247,127,0,0.2);
-    }
-    .evt-cd-num {
-      display: block; font-size: 3rem; font-weight: 900;
-      color: #fff; line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-    .evt-cd-label {
-      display: block; font-size: 0.65rem; font-weight: 700;
-      color: #F77F00; letter-spacing: 2px; text-transform: uppercase;
-      margin-top: 6px;
-    }
-    .evt-cd-colon {
-      font-size: 2rem; color: #fff; opacity: 0.5;
-      padding: 0 6px; margin-bottom: 18px;
-      flex-shrink: 0;
-    }
-
     /* Activity pills */
     .evt-activities {
       display: flex; justify-content: center;
@@ -293,9 +264,6 @@
     }
     @media (max-width: 480px) {
       .evt-card { padding: 24px 18px; }
-      .evt-cd-box { width: 70px; padding: 14px 10px; }
-      .evt-cd-num { font-size: 2rem; }
-      .evt-cd-colon { display: none; }
       .evt-cta { display: block; padding: 16px 24px; }
     }
 
@@ -326,6 +294,7 @@
       padding: 0;
     }
     .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.3rem; }
+    .faq-answer a { color: var(--orange); font-weight: 600; }
 
     /* ── FOOTER ── */
     footer { background: var(--dark); color: rgba(255,255,255,0.75); padding: 4rem 2rem 0; }
@@ -458,7 +427,7 @@
     </div>
   </section>
 
-  <!-- ══ PRÒXIM ESDEVENIMENT ══ -->
+  <!-- ══ ÚLTIMA JORNADA ══ -->
   <section id="esdeveniments" aria-labelledby="title-events">
 
     <!-- Hex texture background -->
@@ -471,7 +440,7 @@
       <rect width="100%" height="100%" fill="url(#evtHex)"/>
     </svg>
 
-    <h2 class="section-title" id="title-events">Pròxim Esdeveniment</h2>
+    <h2 class="section-title" id="title-events">Última Jornada</h2>
     <div class="section-divider" aria-hidden="true"></div>
 
     <article class="evt-card">
@@ -484,36 +453,13 @@
 
       <!-- Title -->
       <h3 class="evt-title">Jornada Enrolats 2026</h3>
-      <p class="evt-tagline">Partides de Rol · Jocs de Taula · Combat en Viu · Molt Més</p>
+      <p class="evt-tagline">Els daus ja han parlat. Descobreix com va ser l'Enrolats 2026</p>
 
       <!-- Divider -->
       <div class="evt-divider" aria-hidden="true">
         <div class="evt-divider-line"></div>
         <span class="evt-divider-dice">🎲</span>
         <div class="evt-divider-line right"></div>
-      </div>
-
-      <!-- Countdown -->
-      <div class="evt-countdown" aria-label="Compte enrere per a l'esdeveniment">
-        <div class="evt-cd-box">
-          <span class="evt-cd-num" id="cd-days">--</span>
-          <span class="evt-cd-label">Dies</span>
-        </div>
-        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
-        <div class="evt-cd-box">
-          <span class="evt-cd-num" id="cd-hours">--</span>
-          <span class="evt-cd-label">Hores</span>
-        </div>
-        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
-        <div class="evt-cd-box">
-          <span class="evt-cd-num" id="cd-mins">--</span>
-          <span class="evt-cd-label">Minuts</span>
-        </div>
-        <span class="evt-cd-colon cd-colon" aria-hidden="true">:</span>
-        <div class="evt-cd-box">
-          <span class="evt-cd-num" id="cd-secs">--</span>
-          <span class="evt-cd-label">Segons</span>
-        </div>
       </div>
 
       <!-- Activity pills -->
@@ -524,8 +470,8 @@
 
       <!-- CTA -->
       <div class="evt-cta-wrap">
-        <a href="enrolats2026.html" class="evt-cta">Descobreix la Jornada Enrolats →</a>
-        <p class="evt-bottom-note">🎟️ Entrada gratuïta · Apunta't ara</p>
+        <a href="enrolats2026.html" class="evt-cta">Llig la crònica →</a>
+        <p class="evt-bottom-note">✍️ Crònica personal d'Alberto</p>
       </div>
 
     </article>
@@ -584,7 +530,7 @@
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer" role="region">
-          Al maig de 2026 vam celebrar la nostra primera Jornada de Jocs, amb taules per a totes les edats, voluntaris explicant jocs i una gran participació de famílies de la comarca. Va ser tot un èxit! Seguim creixent i preparant noves activitats.
+          Al maig de 2026 vam celebrar la nostra primera Jornada de Jocs, amb taules per a totes les edats, voluntaris explicant jocs i una gran participació de famílies de la comarca. Va ser tot un èxit! I el 17 d'octubre de 2026 vam celebrar la Jornada Enrolats, dedicada al rol: pots llegir-ne la <a href="enrolats2026.html">crònica</a>. Seguim creixent i preparant noves activitats.
         </div>
       </div>
 
@@ -653,42 +599,6 @@
         hamburger.setAttribute('aria-expanded', 'false');
       }
     });
-
-    // Countdown to Jornada Enrolats 2026
-    (function() {
-      var target = new Date("2026-10-17T09:00:00+02:00");
-      function pad(n) { return String(n).padStart(2, '0'); }
-      function update() {
-        var now  = new Date();
-        var diff = target - now;
-        if (diff <= 0) {
-          document.getElementById('cd-days').textContent  = '00';
-          document.getElementById('cd-hours').textContent = '00';
-          document.getElementById('cd-mins').textContent  = '00';
-          document.getElementById('cd-secs').textContent  = '00';
-          var cta = document.querySelector('.evt-cta');
-          if (cta) cta.textContent = '🎲 Avui és el gran dia!';
-          return;
-        }
-        var days  = Math.floor(diff / 86400000);
-        var hours = Math.floor((diff % 86400000) / 3600000);
-        var mins  = Math.floor((diff % 3600000)  / 60000);
-        var secs  = Math.floor((diff % 60000)    / 1000);
-        document.getElementById('cd-days').textContent  = days;
-        document.getElementById('cd-hours').textContent = pad(hours);
-        document.getElementById('cd-mins').textContent  = pad(mins);
-        document.getElementById('cd-secs').textContent  = pad(secs);
-      }
-      update();
-      setInterval(update, 1000);
-      // Blink colons
-      var colons = document.querySelectorAll('.cd-colon');
-      setInterval(function() {
-        colons.forEach(function(c) {
-          c.style.opacity = c.style.opacity === '0' ? '0.5' : '0';
-        });
-      }, 1000);
-    })();
 
     // Add nav scroll effect
     window.addEventListener('scroll', function() {
